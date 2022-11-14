@@ -1,7 +1,7 @@
-from cards import Card
-from cards import selected_cards_list
+#from cards import Card
+#from cards import selected_cards_list
 class Pieces:
-    """This class is for the 4 red and blue pawns and 1 red and blue king and will contain the following information: board location and status (alive vs. dead)"""
+    """ This class is for the 4 red and blue pawns and 1 red and blue king and will contain the following information: board location and status (alive vs. dead). """
 
     def __init__(self, x_location, y_location, status):
         """initailize the starting location in x and y, along with the status as alive"""
