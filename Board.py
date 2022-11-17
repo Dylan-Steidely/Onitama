@@ -17,12 +17,15 @@ class Board_tile:
     possible selected is a selceted tile that is a possible move
     """
 
-    def __init__(self, game, tile_number,selected = False):
+    def __init__(self, game, tile_number,selected = False,temple = False):
         self.game = game #the name of the instance of the game class is inputted here
         self.tile = tile_number #tile reference number
         self.selected = selected #to know if tile is selected or not
         self.possible = False #if tile is possible move
-        self.tile_image = pygame.image.load('images/unselectedtile.png') #unselected default image
+        if temple == False:
+            self.tile_image = pygame.image.load('images/unselectedtile.png') #unselected default image
+        else:
+            self.tile_image = pygame.image.load('images/templetile.png')  # unselected temple image
         self.tile_image_rect = self.tile_image.get_rect() #image rect
 
 
@@ -42,7 +45,6 @@ class Board_tile:
         #this method places tiles in their respective positions
         if self.tile == 0:
             self.game.screen.blit(self.tile_image,(0,0))
-            print('hello')
         elif self.tile == 1:
             self.game.screen.blit(self.tile_image, (130, 0))
         elif self.tile == 2:
