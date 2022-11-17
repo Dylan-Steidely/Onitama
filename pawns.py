@@ -39,6 +39,7 @@ class Red_pieces(Pieces):
 
     def __init__(self,x_location, y_location, status):
         super().__init__(x_location, y_location, status)
+        self.image = pygame.image.load('images/redpawn.png')
     def check_legal_move(self, card, movement_letter):
         move_x = card.return_movment_X(movement_letter)
         move_y = card.return_movment_Y(movement_letter)
@@ -65,7 +66,7 @@ class Blue_pieces(Pieces):
 
     def __init__(self,x_location, y_location, status):
         super().__init__(x_location, y_location, status)
-
+        self.image = pygame.image.load('images/bluepawn.png')
 
 
     def check_legal_move(self, card, movement_letter):
@@ -92,11 +93,13 @@ class Red_King(Red_pieces):
 
     def __init__(self,x_location, y_location, status):
         super().__init__(x_location, y_location, status)
+        self.image = pygame.image.load('images/redking.png')
 
 class Blue_King(Blue_pieces):
 
     def __init__(self, x_location, y_location, status):
         super().__init__(x_location, y_location, status)
+        self.image = pygame.image.load('images/blueking.png')
 
 
 
