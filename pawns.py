@@ -33,7 +33,6 @@ class Pieces:
             if self.x == enemy.positionX() and + self.y == enemy.positionY():
                 enemy.kill()
 
-    #def check status
 
 
 
@@ -129,7 +128,7 @@ class Blue_pieces(Pieces):
         move_x = card.return_movment_X(movement_letter)
         move_y = card.return_movment_Y(movement_letter)
         validity = True
-        if move_x + self.x < 1 or move_x + self.x > 5:
+        if move_x - self.x < 1 or move_x - self.x > 5:
             validity = False
         if move_y - self.y < 1 or move_y - self.y > 5:
             validity = False
@@ -139,7 +138,7 @@ class Blue_pieces(Pieces):
         return validity
     def move(self, card, movement_letter):
         move_x = card.return_movment_X(movement_letter)
-        self.x += move_x
+        self.x -= move_x
         print(self.x)
         move_y = card.return_movment_Y(movement_letter)
         self.y -= move_y

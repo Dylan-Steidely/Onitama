@@ -15,6 +15,7 @@ class Board_tile:
     selected which is used for selecting a tile and also lets the user know where the 'cursor' is
     possible unselcted tile is used to show a tile is an avilable move for the selected card
     possible selected is a selceted tile that is a possible move
+    temple tiles are a thing
     """
 
     def __init__(self, game, tile_number,selected = False,temple = False):
