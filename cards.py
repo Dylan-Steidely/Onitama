@@ -1,14 +1,21 @@
+import pygame.image
 
 
 class Card:
     """This is the class for the cards and their stored movements"""
 
-    def __init__(self, name, movement_A , movement_B,movement_C = (0,0),movement_D =(0,0) ):
-        self.name = name
+    def __init__(self,red_u, red_s,blue_u,blue_s, movement_A , movement_B,movement_C = (0,0),movement_D =(0,0) ):
+        self.red_u = pygame.image.load(f'images/{red_u}')
+        self.red_s = pygame.image.load(f'images/{red_s}')
+        self.blue_u = pygame.image.load(f'images/{blue_u}')
+        self.blue_s = pygame.image.load(f'images/{blue_s}')
         self.movement_A = movement_A
         self.movement_B = movement_B
         self.movement_C = movement_C
         self.movement_D = movement_D
+        """ 
+        The attributes to a card are the names of the four image files and the touples for their movements
+        """
 
     def return_movment_X(self, movement_letter):
         if movement_letter == 'A':
@@ -30,27 +37,26 @@ class Card:
         if movement_letter == 'D':
             return self.movement_D[0]
 
-    def return_card_name(self):
-        return self.name
+
 
 
 from random import randint
-tiger = Card('Tiger', (0, -2), (0, 1))
-dragon = Card('Dragon', (-2, -1), (2, -1), (-1, 1), (1, 1))
-frog = Card('Frog', (-1, -1), (-2, 0), (1, 1))
-rabbit = Card('Rabbit', (1, -1), (2, 0), (-1, 1))
-crab = Card('Crab', (0, -1), (-2, 0), (2, 0))
-elephant = Card('Elephant', (-1, -1), (1, -1), (-1, 0), (1, 0))
-goose = Card('Goose', (-1, -1), (-1, 0), (1, 0), (1, 1))
-rooster = Card('Rooster', (1, -1), (-1, 0), (1, 0), (-1, 1))
-monkey = Card('Monkey', (-1, -1), (1, -1), (1, 1), (-1, 1))
-mantis = Card('Mantis', (-1, -1), (1, -1), (0, 1))
-horse = Card('Horse', (0, -1), (-1, 0), (0, 1))
-ox = Card('Ox', (0, -1), (1, 0), (0, 1))
-crane = Card('Crane', (0, -1), (-1, 1), (1, 1))
-boar = Card('Boar', (0, 1), (-1, 0), (1, 0))
-eel = Card('Eel', (-1, -1), (1, 0), (-1, 1))
-cobra = Card('Cobra', (1, -1), (-1, 0), (1, 1))
+tiger = Card('TigerRU.png','TigerRS.png','TigerBU.png','TigerBS.png', (0, -2), (0, 1))
+dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1), (-1, 1), (1, 1))
+frog = Card('FrogRS.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0), (1, 1))
+rabbit = Card('RabbitRU.png','RabbitRS.png','RabbitBU.png','RabbitBS.png', (1, -1), (2, 0), (-1, 1))
+crab = Card('CrabRU.png','CrabRS.png','CrabBU.png','CrabBS.png', (0, -1), (-2, 0), (2, 0))
+elephant = Card('ElephantRU.png','ElephantRS.png','ElephantBU.png','ElephantBS.png', (-1, -1), (1, -1), (-1, 0), (1, 0))
+goose = Card('GooseRU.png','GooseRS.png','GooseBU.png','GooseBS.png', (-1, -1), (-1, 0), (1, 0), (1, 1))
+rooster = Card('RoosterRU.png','RoosterRS.png','RoosterBU.png','RoosterBS.png', (1, -1), (-1, 0), (1, 0), (-1, 1))
+monkey = Card('MonkeyRU.png','MonkeyRS.png','MonkeyBU.png','MonkeyBS.png', (-1, -1), (1, -1), (1, 1), (-1, 1))
+mantis = Card('MantisRU.png','MantisRS.png','MantisBU.png','MantisBS.png', (-1, -1), (1, -1), (0, 1))
+horse = Card('HorseRU.png','HorseRS.png','HorseBU.png','HorseBS.png', (0, -1), (-1, 0), (0, 1))
+ox = Card('OxRU.png','OxRS.png','OxBU.png','OxBS.png', (0, -1), (1, 0), (0, 1))
+crane = Card('CraneRU.png','CraneRS.png','CraneBU.png','CraneBS.png', (0, -1), (-1, 1), (1, 1))
+boar = Card('BoarRU.png','BoarRS.png','BoarBU.png','BoarBS.png', (0, 1), (-1, 0), (1, 0))
+eel = Card('EelRU.png','EelRS.png','EelBU.png','EelBS.png', (-1, -1), (1, 0), (-1, 1))
+cobra = Card('CobraRU.png','CobraRS.png','CobraBU.png','CobraBS.png', (1, -1), (-1, 0), (1, 1))
 
 """ Card Selection"""
 

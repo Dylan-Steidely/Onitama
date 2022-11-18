@@ -1,4 +1,4 @@
-
+import sys
 import pygame
 pygame.init()
 from cards import Card
@@ -21,6 +21,12 @@ class Game:
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Onitama")
+
+    def event_checker(self):
+
+    def key_down(self,event):
+
+
 
     def update_game(self):
         self._update_screen()
