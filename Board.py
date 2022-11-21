@@ -22,13 +22,25 @@ class Board_tile:
         self.tile = tile_number #tile reference number
         self.selected = selected #to know if tile is selected or not
         self.possible = False #if tile is possible move
-        if temple == True:
+        self.temple = temple
+        if self.temple == True:
             self.tile_image = pygame.image.load('images/templetile.png')
         else:
             self.tile_image = pygame.image.load('images/unselectedtile.png')  # unselected default image
         self.tile_image_rect = self.tile_image.get_rect() #image rect
 
-
+    def remove_selection(self):
+        self.selected = False
+        if self.temple == True:
+            self.tile_image = pygame.image.load('images/templetile.png')
+        else:
+            self.tile_image = pygame.image.load('images/unselectedtile.png')
+    def add_selection(self):
+        self.selected = True
+        if self.temple == True:
+            self.tile_image = pygame.image.load('images/selectedtempletile.png')
+        else:
+            self.tile_image = pygame.image.load('images/selectedtile.png')
     def _update_select(self):
         # This method checks if tile is selceted and updates the image
         if self.selected == True:

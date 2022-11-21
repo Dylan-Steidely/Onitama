@@ -16,21 +16,168 @@ class Game:
     def __init__(self):
         pygame.init()
         self.settings = Settings()
-
         self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
         self.settings.screen_width = self.screen.get_rect().width
         self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Onitama")
+        self.selected_tile_coord_x = 3
+        self.selected_tile_coord_y = 3
+        self.selected_tile_coord = (self.selected_tile_coord_x,self.selected_tile_coord_y)
+
+
+    def _selected_tile_mover(self,direction_X,direction_Y):
+
+        if self.selected_tile_coord_x + direction_X >= 6 :
+            print('false')
+        elif self.selected_tile_coord_x + direction_X <= 0:
+            print('false')
+        elif self.selected_tile_coord_y + direction_Y >= 6:
+            print('false')
+        elif self.selected_tile_coord_y + direction_Y <= 0:
+            print('false')
+        else:
+            if self.selected_tile_coord == (1, 1):
+                tile_0.remove_selection()
+            elif self.selected_tile_coord == (1, 2):
+                tile_1.remove_selection()
+            elif self.selected_tile_coord == (1, 3):
+                tile_2.remove_selection()
+            elif self.selected_tile_coord == (1, 4):
+                tile_3.remove_selection()
+            elif self.selected_tile_coord == (1, 5):
+                tile_4.remove_selection()
+            if self.selected_tile_coord == (2, 1):
+                tile_5.remove_selection()
+            elif self.selected_tile_coord == (2, 2):
+                tile_6.remove_selection()
+            elif self.selected_tile_coord == (2, 3):
+                tile_7.remove_selection()
+            elif self.selected_tile_coord == (2, 4):
+                tile_8.remove_selection()
+            elif self.selected_tile_coord == (2, 5):
+                tile_9.remove_selection()
+            elif self.selected_tile_coord == (3, 1):
+                tile_10.remove_selection()
+            elif self.selected_tile_coord == (3, 2):
+                tile_11.remove_selection()
+            elif self.selected_tile_coord == (3, 3):
+                tile_12.remove_selection()
+            elif self.selected_tile_coord == (3, 4):
+                tile_13.remove_selection()
+            elif self.selected_tile_coord == (3, 5):
+                tile_14.remove_selection()
+            elif self.selected_tile_coord == (4, 1):
+                tile_15.remove_selection()
+            elif self.selected_tile_coord == (4, 2):
+                tile_16.remove_selection()
+            elif self.selected_tile_coord == (4, 3):
+                tile_17.remove_selection()
+            elif self.selected_tile_coord == (4, 4):
+                tile_18.remove_selection()
+            elif self.selected_tile_coord == (4, 5):
+                tile_19.remove_selection()
+            elif self.selected_tile_coord == (5, 1):
+                tile_20.remove_selection()
+            elif self.selected_tile_coord == (5, 2):
+                tile_21.remove_selection()
+            elif self.selected_tile_coord == (5, 3):
+                tile_22.remove_selection()
+            elif self.selected_tile_coord == (5, 4):
+                tile_23.remove_selection()
+            elif self.selected_tile_coord == (5, 5):
+                tile_24.remove_selection()
+            self.selected_tile_coord_x += direction_X
+            self.selected_tile_coord_y += direction_Y
+            self.selected_tile_coord = (self.selected_tile_coord_x, self.selected_tile_coord_y)
+            if self.selected_tile_coord == (1, 1):
+                tile_0.add_selection()
+            elif self.selected_tile_coord == (1, 2):
+                tile_1.add_selection()
+            elif self.selected_tile_coord == (1, 3):
+                tile_2.add_selection()
+            elif self.selected_tile_coord == (1, 4):
+                tile_3.add_selection()
+            elif self.selected_tile_coord == (1, 5):
+                tile_4.add_selection()
+            if self.selected_tile_coord == (2, 1):
+                tile_5.add_selection()
+            elif self.selected_tile_coord == (2, 2):
+                tile_6.add_selection()
+            elif self.selected_tile_coord == (2, 3):
+                tile_7.add_selection()
+            elif self.selected_tile_coord == (2, 4):
+                tile_8.add_selection()
+            elif self.selected_tile_coord == (2, 5):
+                tile_9.add_selection()
+            elif self.selected_tile_coord == (3, 1):
+                tile_10.add_selection()
+            elif self.selected_tile_coord == (3, 2):
+                tile_11.add_selection()
+            elif self.selected_tile_coord == (3, 3):
+                tile_12.add_selection()
+            elif self.selected_tile_coord == (3, 4):
+                tile_13.add_selection()
+            elif self.selected_tile_coord == (3, 5):
+                tile_14.add_selection()
+            elif self.selected_tile_coord == (4, 1):
+                tile_15.add_selection()
+            elif self.selected_tile_coord == (4, 2):
+                tile_16.add_selection()
+            elif self.selected_tile_coord == (4, 3):
+                tile_17.add_selection()
+            elif self.selected_tile_coord == (4, 4):
+                tile_18.add_selection()
+            elif self.selected_tile_coord == (4, 5):
+                tile_19.add_selection()
+            elif self.selected_tile_coord == (5, 1):
+                tile_20.add_selection()
+            elif self.selected_tile_coord == (5, 2):
+                tile_21.add_selection()
+            elif self.selected_tile_coord == (5, 3):
+                tile_22.add_selection()
+            elif self.selected_tile_coord == (5, 4):
+                tile_23.add_selection()
+            elif self.selected_tile_coord == (5, 5):
+                tile_24.add_selection()
+
+
+
+
 
     def event_checker(self):
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self.key_down(event)
 
     def key_down(self,event):
+        if event.key == pygame.K_d:
+            self._selected_tile_mover(0,1)
+        elif event.key == pygame.K_s:
+            self._selected_tile_mover(1, 0)
+        elif event.key == pygame.K_w:
+            self._selected_tile_mover(-1, 0)
+        elif event.key == pygame.K_a:
+            self._selected_tile_mover(0, -1)
+        #elif event.key == pygame.K_UP:
+
+        #elif event.key == pygame.K_DOWN:
+
+     #   elif event.key == pygame.K_LEFT:
+
+      #  elif event.key == pygame.K_RIGHT:
+
+#        elif event.key == pygame.K_SPACE:
+
+        elif event.key == pygame.K_ESCAPE:
+            sys.exit()
 
 
 
     def update_game(self):
         self._update_screen()
-
+        self.event_checker()
         tile_0.run_tiler()
         tile_1.run_tiler()
         tile_2.run_tiler()
@@ -56,7 +203,6 @@ class Game:
         tile_22.run_tiler()
         tile_23.run_tiler()
         tile_24.run_tiler()
-
         r1.draw()
         r2.draw()
         r3.draw()
@@ -72,8 +218,6 @@ class Game:
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
 
-        pygame.display.flip()
-
 game = Game()
 tile_0 = Board_tile(game, 0)
 tile_1 = Board_tile(game, 1)
@@ -87,7 +231,7 @@ tile_8 = Board_tile(game, 8)
 tile_9 = Board_tile(game, 9)
 tile_10 = Board_tile(game, 10)
 tile_11 = Board_tile(game, 11)
-tile_12 = Board_tile(game, 12)
+tile_12 = Board_tile(game, 12,True)
 tile_13 = Board_tile(game, 13)
 tile_14 = Board_tile(game, 14)
 tile_15 = Board_tile(game, 15)
@@ -137,7 +281,8 @@ b3.create_enemy_team(r1,r2,r3,r4,R)
 b4.create_enemy_team(r1,r2,r3,r4,R)
 B.create_enemy_team(r1,r2,r3,r4,R)
 
-game.update_game()
+
 game_open = True
 while game_open == True:
+    game.update_game()
     pygame.display.flip()

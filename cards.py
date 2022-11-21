@@ -37,6 +37,11 @@ class Card:
         if movement_letter == 'D':
             return self.movement_D[0]
 
+    def draw_cards(self):
+        
+
+
+
 
 
 
