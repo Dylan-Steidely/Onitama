@@ -2,8 +2,7 @@ import sys
 import pygame
 pygame.init()
 from cards import Card
-from cards import selected_cards_list
-from cards import select_cards
+from random import randint
 from settings import Settings
 from Board import Board_tile
 from pawns import Blue_pieces
@@ -244,6 +243,40 @@ tile_21 = Board_tile(game, 21)
 tile_22 = Board_tile(game, 22, False, True)
 tile_23 = Board_tile(game, 23)
 tile_24 = Board_tile(game, 24)
+
+
+tiger = Card('TigerRU.png','TigerRS.png','TigerBU.png','TigerBS.png', (0, -2), (0, 1),game)
+dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1),game, (-1, 1), (1, 1))
+frog = Card('FrogRS.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0),game, (1, 1))
+rabbit = Card('RabbitRU.png','RabbitRS.png','RabbitBU.png','RabbitBS.png', (1, -1), (2, 0),game, (-1, 1))
+crab = Card('CrabRU.png','CrabRS.png','CrabBU.png','CrabBS.png', (0, -1), (-2, 0),game, (2, 0))
+elephant = Card('ElephantRU.png','ElephantRS.png','ElephantBU.png','ElephantBS.png', (-1, -1), (1, -1),game, (-1, 0), (1, 0))
+goose = Card('GooseRU.png','GooseRS.png','GooseBU.png','GooseBS.png', (-1, -1), (-1, 0),game, (1, 0), (1, 1))
+rooster = Card('RoosterRU.png','RoosterRS.png','RoosterBU.png','RoosterBS.png', (1, -1), (-1, 0),game, (1, 0), (-1, 1))
+monkey = Card('MonkeyRU.png','MonkeyRS.png','MonkeyBU.png','MonkeyBS.png', (-1, -1), (1, -1),game, (1, 1), (-1, 1))
+mantis = Card('MantisRU.png','MantisRS.png','MantisBU.png','MantisBS.png', (-1, -1), (1, -1),game, (0, 1))
+horse = Card('HorseRU.png','HorseRS.png','HorseBU.png','HorseBS.png', (0, -1), (-1, 0),game, (0, 1))
+ox = Card('OxRU.png','OxRS.png','OxBU.png','OxBS.png', (0, -1), (1, 0),game, (0, 1))
+crane = Card('CraneRU.png','CraneRS.png','CraneBU.png','CraneBS.png', (0, -1), (-1, 1),game, (1, 1))
+boar = Card('BoarRU.png','BoarRS.png','BoarBU.png','BoarBS.png', (0, 1), (-1, 0),game, (1, 0))
+eel = Card('EelRU.png','EelRS.png','EelBU.png','EelBS.png', (-1, -1), (1, 0),game, (-1, 1))
+cobra = Card('CobraRU.png','CobraRS.png','CobraBU.png','CobraBS.png', (1, -1), (-1, 0),game, (1, 1))
+
+card_name_list = [tiger, dragon, frog, rabbit, crab, elephant, goose,
+                  rooster, monkey, mantis, horse, ox, crane, boar, eel, cobra]
+selected_cards_list = []
+def select_cards():
+    while len(selected_cards_list) != 5:
+        i = randint(0, 15)
+        random_card = card_name_list[i]
+        if random_card not in selected_cards_list:
+            selected_cards_list.append(random_card)
+            # help done by Nathan Faust
+def selected_cards_pos_update():
+    i = 1
+    for card in select_cards():
+        card.update_position(i)
+        i += 1
 
 r1 = Red_pieces(1,5,'alive',game)
 r2 = Red_pieces(2,5,'alive',game)
