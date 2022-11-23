@@ -22,20 +22,22 @@ class Board_tile:
         self.tile = tile_number #tile reference number
         self.selected = selected #to know if tile is selected or not
         self.possible = False #if tile is possible move
-        self.temple = temple
-        if self.temple == True:
+        self.temple = temple #if tile is a temple tile
+        if self.temple == True: #check the temple tile and updates the images
             self.tile_image = pygame.image.load('images/templetile.png')
         else:
             self.tile_image = pygame.image.load('images/unselectedtile.png')  # unselected default image
         self.tile_image_rect = self.tile_image.get_rect() #image rect
 
     def remove_selection(self):
+        # remove the selection boulion to False
         self.selected = False
         if self.temple == True:
             self.tile_image = pygame.image.load('images/templetile.png')
         else:
             self.tile_image = pygame.image.load('images/unselectedtile.png')
     def add_selection(self):
+        # add the selection boulion to True
         self.selected = True
         if self.temple == True:
             self.tile_image = pygame.image.load('images/selectedtempletile.png')
@@ -55,6 +57,7 @@ class Board_tile:
 
     def arrange_tile(self):
         #this method places tiles in their respective positions
+        #similar to the game.py code this is actually disgusting but i just don't think about it too much
         if self.tile == 0:
             self.game.screen.blit(self.tile_image,(0,0))
         elif self.tile == 1:

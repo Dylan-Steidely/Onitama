@@ -294,6 +294,9 @@ class Game:
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
         #screen fill with background color
+
+
+
 game = Game()
 #tile instances
 tile_0 = Board_tile(game, 0)
