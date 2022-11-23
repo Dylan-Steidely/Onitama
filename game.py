@@ -1,15 +1,13 @@
 import sys
 import pygame
-pygame.init()
-from cards import Card
-from random import randint
 from settings import Settings
 from Board import Board_tile
 from pawns import Blue_pieces
 from pawns import Red_pieces
 from pawns import Red_King
 from pawns import Blue_King
-
+from cards import selected_cards_list
+pygame.init()
 class Game:
 
     def __init__(self):
@@ -22,6 +20,8 @@ class Game:
         self.selected_tile_coord_x = 3
         self.selected_tile_coord_y = 3
         self.selected_tile_coord = (self.selected_tile_coord_x,self.selected_tile_coord_y)
+        self.selected_card_var = 4
+        self.turn= 'red'
 
 
     def _selected_tile_mover(self,direction_X,direction_Y):
@@ -139,9 +139,38 @@ class Game:
             elif self.selected_tile_coord == (5, 5):
                 tile_24.add_selection()
 
+    def draw_cards_cards(self):
+        for cards in selected_cards_list:
+            if cards.pos == 1:
+                if cards.selected == True:
+                    cards.image = cards.blue_s
+                else:
+                    cards.image = cards.blue_u
+                self.screen.blit(cards.image, (620,0))
+            elif cards.pos == 2:
+                if cards.selected == True:
+                    cards.image = cards.blue_s
+                else:
+                    cards.image = cards.blue_u
+                self.screen.blit(cards.image, (620,55))
+            elif cards.pos == 3 and self.turn == 'red':
+                self.screen.blit(cards.red_u, (620,300))
+            elif cards.pos == 3 and self.turn == 'blue':
+                self.screen.blit(cards.blue_u, (620,300))
+            elif cards.pos == 4:
+                if cards.selected == True:
+                    cards.image = cards.red_s
+                else:
+                    cards.image = cards.red_u
+                self.screen.blit(cards.image, (620,545))
+            elif cards.pos == 5:
+                if cards.selected == True:
+                    cards.image = cards.red_s
+                else:
+                    cards.image = cards.red_u
+                self.screen.blit(cards.image, (620,600))
 
-
-
+    def _selected_card_mover(self,direction)
 
     def event_checker(self):
         for event in pygame.event.get():
@@ -149,7 +178,6 @@ class Game:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self.key_down(event)
-
     def key_down(self,event):
         if event.key == pygame.K_d:
             self._selected_tile_mover(0,1)
@@ -159,24 +187,20 @@ class Game:
             self._selected_tile_mover(-1, 0)
         elif event.key == pygame.K_a:
             self._selected_tile_mover(0, -1)
-        #elif event.key == pygame.K_UP:
+        elif event.key == pygame.K_UP:
+            self._selected_card_mover(1)
+        elif event.key == pygame.K_DOWN:
+            self._selected_card_mover(-1)
 
-        #elif event.key == pygame.K_DOWN:
-
-     #   elif event.key == pygame.K_LEFT:
-
-      #  elif event.key == pygame.K_RIGHT:
 
 #        elif event.key == pygame.K_SPACE:
 
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
-
-
-
     def update_game(self):
         self._update_screen()
         self.event_checker()
+        self.draw_cards_cards()
         tile_0.run_tiler()
         tile_1.run_tiler()
         tile_2.run_tiler()
@@ -212,12 +236,10 @@ class Game:
         b3.draw()
         b4.draw()
         B.draw()
-
-
     def _update_screen(self):
         self.screen.fill(self.settings.bg_color)
-
 game = Game()
+#tile instances
 tile_0 = Board_tile(game, 0)
 tile_1 = Board_tile(game, 1)
 tile_2 = Board_tile(game, 2, False, True)
@@ -243,71 +265,37 @@ tile_21 = Board_tile(game, 21)
 tile_22 = Board_tile(game, 22, False, True)
 tile_23 = Board_tile(game, 23)
 tile_24 = Board_tile(game, 24)
-
-
-tiger = Card('TigerRU.png','TigerRS.png','TigerBU.png','TigerBS.png', (0, -2), (0, 1),game)
-dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1),game, (-1, 1), (1, 1))
-frog = Card('FrogRS.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0),game, (1, 1))
-rabbit = Card('RabbitRU.png','RabbitRS.png','RabbitBU.png','RabbitBS.png', (1, -1), (2, 0),game, (-1, 1))
-crab = Card('CrabRU.png','CrabRS.png','CrabBU.png','CrabBS.png', (0, -1), (-2, 0),game, (2, 0))
-elephant = Card('ElephantRU.png','ElephantRS.png','ElephantBU.png','ElephantBS.png', (-1, -1), (1, -1),game, (-1, 0), (1, 0))
-goose = Card('GooseRU.png','GooseRS.png','GooseBU.png','GooseBS.png', (-1, -1), (-1, 0),game, (1, 0), (1, 1))
-rooster = Card('RoosterRU.png','RoosterRS.png','RoosterBU.png','RoosterBS.png', (1, -1), (-1, 0),game, (1, 0), (-1, 1))
-monkey = Card('MonkeyRU.png','MonkeyRS.png','MonkeyBU.png','MonkeyBS.png', (-1, -1), (1, -1),game, (1, 1), (-1, 1))
-mantis = Card('MantisRU.png','MantisRS.png','MantisBU.png','MantisBS.png', (-1, -1), (1, -1),game, (0, 1))
-horse = Card('HorseRU.png','HorseRS.png','HorseBU.png','HorseBS.png', (0, -1), (-1, 0),game, (0, 1))
-ox = Card('OxRU.png','OxRS.png','OxBU.png','OxBS.png', (0, -1), (1, 0),game, (0, 1))
-crane = Card('CraneRU.png','CraneRS.png','CraneBU.png','CraneBS.png', (0, -1), (-1, 1),game, (1, 1))
-boar = Card('BoarRU.png','BoarRS.png','BoarBU.png','BoarBS.png', (0, 1), (-1, 0),game, (1, 0))
-eel = Card('EelRU.png','EelRS.png','EelBU.png','EelBS.png', (-1, -1), (1, 0),game, (-1, 1))
-cobra = Card('CobraRU.png','CobraRS.png','CobraBU.png','CobraBS.png', (1, -1), (-1, 0),game, (1, 1))
-
-card_name_list = [tiger, dragon, frog, rabbit, crab, elephant, goose,
-                  rooster, monkey, mantis, horse, ox, crane, boar, eel, cobra]
-selected_cards_list = []
-def select_cards():
-    while len(selected_cards_list) != 5:
-        i = randint(0, 15)
-        random_card = card_name_list[i]
-        if random_card not in selected_cards_list:
-            selected_cards_list.append(random_card)
-            # help done by Nathan Faust
-def selected_cards_pos_update():
-    i = 1
-    for card in select_cards():
-        card.update_position(i)
-        i += 1
-
+#red piece instances
 r1 = Red_pieces(1,5,'alive',game)
 r2 = Red_pieces(2,5,'alive',game)
 r3 = Red_pieces(4,5,'alive',game)
 r4 = Red_pieces(5,5,'alive',game)
 R = Red_King(3,5,'alive',game)
-
+#blue piece instances
 b1 = Blue_pieces(1,1,'alive',game)
 b2 = Blue_pieces(2,1,'alive',game)
 b3 = Blue_pieces(4,1,'alive',game)
 b4 = Blue_pieces(5,1,'alive',game)
 B = Blue_King(3,1,'alive',game)
-
+#red recognition methods
 r1.create_team(r2,r3,r4,R)
 r2.create_team(r1,r3,r4,R)
 r3.create_team(r1,r2,r4,R)
 r4.create_team(r1,r2,r3,R)
 R.create_team(r1,r2,r3,r4)
-
+#blue recognition methods
 b1.create_team(b2,b3,b4,B)
 b2.create_team(b1,b3,b4,B)
 b3.create_team(b1,b2,b4,B)
 b4.create_team(b1,b1,b3,B)
 B.create_team(b1,b2,b3,b4)
-
+#enemy recognition method
 r1.create_enemy_team(b1,b2,b3,b4,B)
 r2.create_enemy_team(b1,b2,b3,b4,B)
 r3.create_enemy_team(b1,b2,b3,b4,B)
 r4.create_enemy_team(b1,b2,b3,b4,B)
 R.create_enemy_team(b1,b2,b3,b4,B)
-
+#enemy recognition method
 b1.create_enemy_team(r1,r2,r3,r4,R)
 b2.create_enemy_team(r1,r2,r3,r4,R)
 b3.create_enemy_team(r1,r2,r3,r4,R)
