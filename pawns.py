@@ -8,6 +8,7 @@ class Pieces:
         """initailize the starting location in x and y, along with the status as alive"""
         self.x = x_location
         self.y = y_location
+        self.coord = (self.x , self.y )
         self.status = status
         self.game = game
 

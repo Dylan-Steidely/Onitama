@@ -31,7 +31,6 @@ class Game:
 
         #trun order can either be 'blue' or 'red' if not than this is going to break
         self.turn= 'red'
-
     def event_checker(self):
         #event checker duh
         #sorry that was rude. i just feel like this one is kinda obvious
@@ -41,24 +40,30 @@ class Game:
             elif event.type == pygame.KEYDOWN:
                 #I only put key down events cause it was the only one i needed
                 self.key_down(event)
-
     def key_down(self, event):
         #if the key down events are triggered they will be funneled into here
         #WASD is for the tile selector
         if event.key == pygame.K_d:
-            self._selected_tile_mover(0, 1)
+            self.selected_tile_mover(0, 1)
         elif event.key == pygame.K_s:
-            self._selected_tile_mover(1, 0)
+            self.selected_tile_mover(1, 0)
         elif event.key == pygame.K_w:
-            self._selected_tile_mover(-1, 0)
+            self.selected_tile_mover(-1, 0)
         elif event.key == pygame.K_a:
-            self._selected_tile_mover(0, -1)
+            self.selected_tile_mover(0, -1)
         #UP and Down is for the card selector
         elif event.key == pygame.K_UP:
-            self._selected_card_mover(-1)
+            self.selected_card_mover(-1)
         elif event.key == pygame.K_DOWN:
-            self._selected_card_mover(1)
-
+            self.selected_card_mover(1)
+        elif event.key == pygame.K_1:
+            movement = 'A'
+        elif event.key == pygame.K_2:
+            movement = 'B'
+        elif event.key == pygame.K_3:
+            movement = 'C'
+        elif event.key == pygame.K_4:
+            movement = 'D'
 
         #        elif event.key == pygame.K_SPACE:
 
@@ -100,8 +105,9 @@ class Game:
         # this makes the 
         num = self.selected_card_var - 1
         selected_cards_list[num].selected = True
+        #print(f'{selected_cards_list[num]} turned {selected_cards_list[num].selected}')
         self.draw_cards()
-    def _selected_card_mover(self,direction):
+    def selected_card_mover(self,direction):
         if self.turn == 'red':
            if self.selected_card_var + direction <= 3:
                print(self.selected_card_var)
@@ -113,9 +119,10 @@ class Game:
                num = self.selected_card_var -1
                self.selected_card_var += direction
                selected_cards_list[num].selected = False
+               #print(f'{selected_cards_list[num]} turned {selected_cards_list[num].selected}')
                print(self.selected_card_var)
                self.update_card_image()
-        if self.turn == 'red':
+        if self.turn == 'blue':
            if self.selected_card_var + direction <= 0:
               print('false')
               print(self.selected_card_var)
@@ -123,11 +130,13 @@ class Game:
               print('false')
               print(self.selected_card_var)
            else:
-               num = self.selected_card_var -1
+               num = self.selected_card_var - 1
                self.selected_card_var += direction
                selected_cards_list[num].selected = False
+               # print(f'{selected_cards_list[num]} turned {selected_cards_list[num].selected}')
                print(self.selected_card_var)
-    def _selected_tile_mover(self,direction_X,direction_Y):
+               self.update_card_image()
+    def selected_tile_mover(self,direction_X,direction_Y):
         # This method is the movement for the tile selector it takes inputs from the event checker to get the x and y direction of movement
         # the following series of statements will check to make sure the selector remains on the board by checking the x and y positions
         if self.selected_tile_coord_x + direction_X >= 6 :
@@ -247,9 +256,124 @@ class Game:
             elif self.selected_tile_coord == (5, 5):
                 tile_24.add_selection()
             #this is the dumbest thing that works ever
+
+    def possible_tiler(self,movement):
+        num = self.selected_card_var - 1
+        if self.turn == 'red':
+            for piece in red_team:
+                if self.selected_tile_coord == piece.coord:
+                    possible_coord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_x
+                    possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_y
+                    possible_coord = (possible_coord_x,possible_coord_y)
+                    if possible_coord == (1, 1):
+                        tile_0.possible = True
+                        tile_0.update_possible()
+                        tile_0.run_tiler()
+                    elif possible_coord == (1, 2):
+                        tile_1.possible = True
+                        tile_1.update_possible()
+                        tile_1.run_tiler()
+                    elif possible_coord == (1, 3):
+                        tile_2.possible = True
+                        tile_2.update_possible()
+                        tile_2.run_tiler()
+                    elif possible_coord == (1, 4):
+                        tile_3.possible = True
+                        tile_3.update_possible()
+                        tile_3.run_tiler()
+                    elif possible_coord == (1, 5):
+                        tile_4.possible = True
+                        tile_4.update_possible()
+                        tile_4.run_tiler()
+                    if possible_coord == (2, 1):
+                        tile_5.possible = True
+                        tile_5.update_possible()
+                        tile_5.run_tiler()
+                    elif possible_coord == (2, 2):
+                        tile_6.possible = True
+                        tile_6.update_possible()
+                        tile_6.run_tiler()
+                    elif possible_coord == (2, 3):
+                        tile_7.possible = True
+                        tile_7.update_possible()
+                        tile_7.run_tiler()
+                    elif possible_coord == (2, 4):
+                        tile_8.possible = True
+                        tile_8.update_possible()
+                        tile_8.run_tiler()
+                    elif possible_coord == (2, 5):
+                        tile_9.possible = True
+                        tile_9.update_possible()
+                        tile_9.run_tiler()
+                    elif possible_coord == (3, 1):
+                        tile_10.possible = True
+                        tile_10.update_possible()
+                        tile_10.run_tiler()
+                    elif possible_coord == (3, 2):
+                        tile_11.possible = True
+                        tile_11.update_possible()
+                        tile_11.run_tiler()
+                    elif possible_coord == (3, 3):
+                        tile_12.possible = True
+                        tile_12.update_possible()
+                        tile_12.run_tiler()
+                    elif possible_coord == (3, 4):
+                        tile_13.possible = True
+                        tile_13.update_possible()
+                        tile_13.run_tiler()
+                    elif possible_coord == (3, 5):
+                        tile_14.possible = True
+                        tile_14.update_possible()
+                        tile_14.run_tiler()
+                    elif possible_coord == (4, 1):
+                        tile_15.possible = True
+                        tile_15.update_possible()
+                        tile_15.run_tiler()
+                    elif possible_coord == (4, 2):
+                        tile_16.possible = True
+                        tile_16.update_possible()
+                        tile_16.run_tiler()
+                    elif possible_coord == (4, 3):
+                        tile_17.possible = True
+                        tile_17.update_possible()
+                        tile_17.run_tiler()
+                    elif possible_coord == (4, 4):
+                        tile_18.possible = True
+                        tile_18.update_possible()
+                        tile_18.run_tiler()
+                    elif possible_coord == (4, 5):
+                        tile_19.possible = True
+                        tile_19.update_possible()
+                        tile_19.run_tiler()
+                    elif possible_coord == (5, 1):
+                        tile_20.possible = True
+                        tile_20.update_possible()
+                        tile_20.run_tiler()
+                    elif possible_coord == (5, 2):
+                        tile_21.possible = True
+                        tile_21.update_possible()
+                        tile_21.run_tiler()
+                    elif possible_coord == (5, 3):
+                        tile_22.possible = True
+                        tile_22.update_possible()
+                        tile_22.run_tiler()
+                    elif possible_coord == (5, 4):
+                        tile_23.possible = True
+                        tile_23.update_possible()
+                        tile_23.run_tiler()
+                    elif possible_coord == (5, 5):
+                        tile_24.possible = True
+                        tile_24.update_possible()
+                        tile_24.run_tiler()
+        if self.turn == 'blue':
+            for piece in blue_team:
+                if self.selected_tile_coord == piece.coord:
+                    possible_cord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_x
+                    possible_cord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_y
+
     def update_game(self):
         # this is the encompassing method for the game instance to update the changing parameters
-        self._update_screen() #screen updates
+        self.update_screen()  #screen updates
         self.event_checker() # event checker
         self.draw_cards() #function that contiuosly draws the cards
         # more cancerous programming that could be solved with a for loop and a list
@@ -291,7 +415,7 @@ class Game:
         b3.draw()
         b4.draw()
         B.draw()
-    def _update_screen(self):
+    def update_screen(self):
         self.screen.fill(self.settings.bg_color)
         #screen fill with background color
 
@@ -330,12 +454,14 @@ r2 = Red_pieces(2,5,'alive',game)
 r3 = Red_pieces(4,5,'alive',game)
 r4 = Red_pieces(5,5,'alive',game)
 R = Red_King(3,5,'alive',game)
+red_team = [ r1, r2, r3, r4, R]
 #blue piece instances
 b1 = Blue_pieces(1,1,'alive',game)
 b2 = Blue_pieces(2,1,'alive',game)
 b3 = Blue_pieces(4,1,'alive',game)
 b4 = Blue_pieces(5,1,'alive',game)
 B = Blue_King(3,1,'alive',game)
+blue_team = [b1,b2,b3,b4,B]
 #red recognition methods
 r1.create_team(r2,r3,r4,R)
 r2.create_team(r1,r3,r4,R)

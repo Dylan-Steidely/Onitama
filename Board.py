@@ -50,9 +50,9 @@ class Board_tile:
         if self.selected == True and self.possible == True:
             self.tile_image = pygame.image.load('images/selectedpossibletile.png')
 
-    def _update_possible(self):
+    def update_possible(self):
         #this method checks if tile is possible move and updates the image
-        if self.possible == True and self.selected != True:
+        if self.possible == True:
             self.tile_image = pygame.image.load('images/possibletile.png')
 
     def arrange_tile(self):
@@ -113,7 +113,7 @@ class Board_tile:
     def run_tiler(self):
         #method combines the check and the arrnagement methods to make a tiler that when looped will tile the board
         self._update_select()
-        self._update_possible()
+        self.update_possible()
         self.arrange_tile()
 
 
