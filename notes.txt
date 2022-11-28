@@ -1,13 +1,14 @@
 The things I need to do:
-    2. add possible moves
-        a. fix bug
-    3. add move making
-        a. movement selection
-        b. piece selection
-        c. event check
     4. add turn switching
     5. add win conditions
+    6. card rotation
 The things I have done since last git:
     1. fix card selection bug
         a. double highlighting
         b. blue's turn
+    3. add move making
+        a. movement selection
+        b. piece selection
+        c. event check
+    2. add possible moves
+        a. fix bug

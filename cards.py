@@ -51,7 +51,7 @@ class Card:
 # This is the 16 card instances
 tiger = Card('TigerRU.png','TigerRS.png','TigerBU.png','TigerBS.png', (0, -2), (0, 1))
 dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1), (-1, 1), (1, 1))
-frog = Card('FrogRS.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0), (1, 1))
+frog = Card('FrogRU.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0), (1, 1))
 rabbit = Card('RabbitRU.png','RabbitRS.png','RabbitBU.png','RabbitBS.png', (1, -1), (2, 0), (-1, 1))
 crab = Card('CrabRU.png','CrabRS.png','CrabBU.png','CrabBS.png', (0, -1), (-2, 0), (2, 0))
 elephant = Card('ElephantRU.png','ElephantRS.png','ElephantBU.png','ElephantBS.png', (-1, -1), (1, -1), (-1, 0), (1, 0))

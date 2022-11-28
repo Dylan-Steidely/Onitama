@@ -1,5 +1,5 @@
 import pygame
-import sys
+import time
 pygame.init()
 class Board_tile:
     """
@@ -39,22 +39,25 @@ class Board_tile:
     def add_selection(self):
         # add the selection boulion to True
         self.selected = True
-        if self.temple == True:
-            self.tile_image = pygame.image.load('images/selectedtempletile.png')
-        else:
-            self.tile_image = pygame.image.load('images/selectedtile.png')
     def _update_select(self):
         # This method checks if tile is selceted and updates the image
         if self.selected == True:
             self.tile_image = pygame.image.load('images/selectedtile.png')
-        if self.selected == True and self.possible == True:
-            self.tile_image = pygame.image.load('images/selectedpossibletile.png')
+            if self.temple == True:
+                self.tile_image = pygame.image.load('images/selectedtempletile.png')
 
     def update_possible(self):
-        #this method checks if tile is possible move and updates the image
+        print('possible')
         if self.possible == True:
             self.tile_image = pygame.image.load('images/possibletile.png')
-
+            if  self.temple == True:
+                self.tile_image = pygame.image.load('images/possibletempletile.png')
+    def unpossible(self):
+        if self.possible == True:
+            self.possible = False
+            self.tile_image = pygame.image.load('images/unselectedtile.png')
+            if self.temple == True:
+                self.tile_image = pygame.image.load('images/templetile.png')
     def arrange_tile(self):
         #this method places tiles in their respective positions
         #similar to the game.py code this is actually disgusting but i just don't think about it too much
@@ -113,7 +116,6 @@ class Board_tile:
     def run_tiler(self):
         #method combines the check and the arrnagement methods to make a tiler that when looped will tile the board
         self._update_select()
-        self.update_possible()
         self.arrange_tile()
 
 

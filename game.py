@@ -9,7 +9,6 @@ from pawns import Blue_King
 from cards import selected_cards_list
 pygame.init()
 class Game:
-
     def __init__(self):
         #general game set up
         pygame.init()
@@ -25,6 +24,10 @@ class Game:
         self.selected_tile_coord_x = 3
         self.selected_tile_coord_y = 3
         self.selected_tile_coord = (self.selected_tile_coord_x,self.selected_tile_coord_y)
+
+        self.possible_coord = (0,0)
+
+        self.movement = ''
 
         #this is the initial card selector variable deterimines where the card selector will start from
         self.selected_card_var = 4
@@ -57,16 +60,23 @@ class Game:
         elif event.key == pygame.K_DOWN:
             self.selected_card_mover(1)
         elif event.key == pygame.K_1:
-            movement = 'A'
+            self.movement = 'A'
+            self.unpossible_tiler()
+            self.possible_tiler(self.movement)
         elif event.key == pygame.K_2:
-            movement = 'B'
+            self.movement = 'B'
+            self.unpossible_tiler()
+            self.possible_tiler(self.movement)
         elif event.key == pygame.K_3:
-            movement = 'C'
+            self.movement = 'C'
+            self.unpossible_tiler()
+            self.possible_tiler(self.movement)
         elif event.key == pygame.K_4:
-            movement = 'D'
-
-        #        elif event.key == pygame.K_SPACE:
-
+            self.movement = 'D'
+            self.unpossible_tiler()
+            self.possible_tiler(self.movement)
+        elif event.key == pygame.K_SPACE:
+            self.move(self.movement)
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
     def draw_cards(self):
@@ -256,121 +266,305 @@ class Game:
             elif self.selected_tile_coord == (5, 5):
                 tile_24.add_selection()
             #this is the dumbest thing that works ever
-
     def possible_tiler(self,movement):
         num = self.selected_card_var - 1
         if self.turn == 'red':
             for piece in red_team:
+                print(piece)
+                print(self.selected_tile_coord)
+                print(piece.coord)
                 if self.selected_tile_coord == piece.coord:
-                    possible_coord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_x
-                    possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_y
-                    possible_coord = (possible_coord_x,possible_coord_y)
-                    if possible_coord == (1, 1):
-                        tile_0.possible = True
-                        tile_0.update_possible()
-                        tile_0.run_tiler()
-                    elif possible_coord == (1, 2):
-                        tile_1.possible = True
-                        tile_1.update_possible()
-                        tile_1.run_tiler()
-                    elif possible_coord == (1, 3):
-                        tile_2.possible = True
-                        tile_2.update_possible()
-                        tile_2.run_tiler()
-                    elif possible_coord == (1, 4):
-                        tile_3.possible = True
-                        tile_3.update_possible()
-                        tile_3.run_tiler()
-                    elif possible_coord == (1, 5):
-                        tile_4.possible = True
-                        tile_4.update_possible()
-                        tile_4.run_tiler()
-                    if possible_coord == (2, 1):
-                        tile_5.possible = True
-                        tile_5.update_possible()
-                        tile_5.run_tiler()
-                    elif possible_coord == (2, 2):
-                        tile_6.possible = True
-                        tile_6.update_possible()
-                        tile_6.run_tiler()
-                    elif possible_coord == (2, 3):
-                        tile_7.possible = True
-                        tile_7.update_possible()
-                        tile_7.run_tiler()
-                    elif possible_coord == (2, 4):
-                        tile_8.possible = True
-                        tile_8.update_possible()
-                        tile_8.run_tiler()
-                    elif possible_coord == (2, 5):
-                        tile_9.possible = True
-                        tile_9.update_possible()
-                        tile_9.run_tiler()
-                    elif possible_coord == (3, 1):
-                        tile_10.possible = True
-                        tile_10.update_possible()
-                        tile_10.run_tiler()
-                    elif possible_coord == (3, 2):
-                        tile_11.possible = True
-                        tile_11.update_possible()
-                        tile_11.run_tiler()
-                    elif possible_coord == (3, 3):
-                        tile_12.possible = True
-                        tile_12.update_possible()
-                        tile_12.run_tiler()
-                    elif possible_coord == (3, 4):
-                        tile_13.possible = True
-                        tile_13.update_possible()
-                        tile_13.run_tiler()
-                    elif possible_coord == (3, 5):
-                        tile_14.possible = True
-                        tile_14.update_possible()
-                        tile_14.run_tiler()
-                    elif possible_coord == (4, 1):
-                        tile_15.possible = True
-                        tile_15.update_possible()
-                        tile_15.run_tiler()
-                    elif possible_coord == (4, 2):
-                        tile_16.possible = True
-                        tile_16.update_possible()
-                        tile_16.run_tiler()
-                    elif possible_coord == (4, 3):
-                        tile_17.possible = True
-                        tile_17.update_possible()
-                        tile_17.run_tiler()
-                    elif possible_coord == (4, 4):
-                        tile_18.possible = True
-                        tile_18.update_possible()
-                        tile_18.run_tiler()
-                    elif possible_coord == (4, 5):
-                        tile_19.possible = True
-                        tile_19.update_possible()
-                        tile_19.run_tiler()
-                    elif possible_coord == (5, 1):
-                        tile_20.possible = True
-                        tile_20.update_possible()
-                        tile_20.run_tiler()
-                    elif possible_coord == (5, 2):
-                        tile_21.possible = True
-                        tile_21.update_possible()
-                        tile_21.run_tiler()
-                    elif possible_coord == (5, 3):
-                        tile_22.possible = True
-                        tile_22.update_possible()
-                        tile_22.run_tiler()
-                    elif possible_coord == (5, 4):
-                        tile_23.possible = True
-                        tile_23.update_possible()
-                        tile_23.run_tiler()
-                    elif possible_coord == (5, 5):
-                        tile_24.possible = True
-                        tile_24.update_possible()
-                        tile_24.run_tiler()
+                    possible_coord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_y
+                    possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_x
+                    self.possible_coord = (possible_coord_y,possible_coord_x)
+                    print(self.possible_coord)
+                    if self.possible_coord == (1, 1):
+                         tile_0.possible = True
+                         tile_0.update_possible()
+                         tile_0.run_tiler()
+                    elif self.possible_coord == (1, 2):
+                         tile_1.possible = True
+                         tile_1.update_possible()
+                         tile_1.run_tiler()
+                    elif self.possible_coord == (1, 3):
+                         tile_2.possible = True
+                         tile_2.update_possible()
+                         tile_2.run_tiler()
+                    elif self.possible_coord == (1, 4):
+                         tile_3.possible = True
+                         tile_3.update_possible()
+                         tile_3.run_tiler()
+                    elif self.possible_coord == (1, 5):
+                         tile_4.possible = True
+                         tile_4.update_possible()
+                         tile_4.run_tiler()
+                    elif self.possible_coord == (2, 1):
+                         tile_5.possible = True
+                         tile_5.update_possible()
+                         tile_5.run_tiler()
+                    elif self.possible_coord == (2, 2):
+                         tile_6.possible = True
+                         tile_6.update_possible()
+                         tile_6.run_tiler()
+                    elif self.possible_coord == (2, 3):
+                         tile_7.possible = True
+                         tile_7.update_possible()
+                         tile_7.run_tiler()
+                    elif self.possible_coord == (2, 4):
+                         tile_8.possible = True
+                         tile_8.update_possible()
+                         tile_8.run_tiler()
+                    elif self.possible_coord == (2, 5):
+                         tile_9.possible = True
+                         tile_9.update_possible()
+                         tile_9.run_tiler()
+                    elif self.possible_coord == (3, 1):
+                         tile_10.possible = True
+                         tile_10.update_possible()
+                         tile_10.run_tiler()
+                    elif self.possible_coord == (3, 2):
+                         tile_11.possible = True
+                         tile_11.update_possible()
+                         tile_11.run_tiler()
+                    elif self.possible_coord == (3, 3):
+                         tile_12.possible = True
+                         tile_12.update_possible()
+                         tile_12.run_tiler()
+                    elif self.possible_coord == (3, 4):
+                         tile_13.possible = True
+                         tile_13.update_possible()
+                         tile_13.run_tiler()
+                    elif self.possible_coord == (3, 5):
+                         tile_14.possible = True
+                         tile_14.update_possible()
+                         tile_14.run_tiler()
+                    elif self.possible_coord == (4, 1):
+                         tile_15.possible = True
+                         tile_15.update_possible()
+                         tile_15.run_tiler()
+                    elif self.possible_coord == (4, 2):
+                         tile_16.possible = True
+                         tile_16.update_possible()
+                         tile_16.run_tiler()
+                    elif self.possible_coord == (4, 3):
+                         tile_17.possible = True
+                         tile_17.update_possible()
+                         tile_17.run_tiler()
+                    elif self.possible_coord == (4, 4):
+                         tile_18.possible = True
+                         tile_18.update_possible()
+                         tile_18.run_tiler()
+                    elif self.possible_coord == (4, 5):
+                         tile_19.possible = True
+                         tile_19.update_possible()
+                         tile_19.run_tiler()
+                    elif self.possible_coord == (5, 1):
+                         tile_20.possible = True
+                         tile_20.update_possible()
+                         tile_20.run_tiler()
+                    elif self.possible_coord == (5, 2):
+                         tile_21.possible = True
+                         tile_21.update_possible()
+                         tile_21.run_tiler()
+                    elif self.possible_coord == (5, 3):
+                         tile_22.possible = True
+                         tile_22.update_possible()
+                         tile_22.run_tiler()
+                    elif self.possible_coord == (5, 4):
+                         tile_23.possible = True
+                         tile_23.update_possible()
+                         tile_23.run_tiler()
+                    elif self.possible_coord == (5, 5):
+                         tile_24.possible = True
+                         tile_24.update_possible()
+                         tile_24.run_tiler()
         if self.turn == 'blue':
             for piece in blue_team:
                 if self.selected_tile_coord == piece.coord:
                     possible_cord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_x
                     possible_cord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_y
-
+                    self.possible_coord = (possible_coord_y, possible_coord_x)
+                    if self.possible_coord == (1, 1):
+                         tile_0.possible = True
+                         tile_0.update_possible()
+                         tile_0.run_tiler()
+                    elif self.possible_coord == (1, 2):
+                         tile_1.possible = True
+                         tile_1.update_possible()
+                         tile_1.run_tiler()
+                    elif self.possible_coord == (1, 3):
+                         tile_2.possible = True
+                         tile_2.update_possible()
+                         tile_2.run_tiler()
+                    elif self.possible_coord == (1, 4):
+                         tile_3.possible = True
+                         tile_3.update_possible()
+                         tile_3.run_tiler()
+                    elif self.possible_coord == (1, 5):
+                         tile_4.possible = True
+                         tile_4.update_possible()
+                         tile_4.run_tiler()
+                    elif self.possible_coord == (2, 1):
+                         tile_5.possible = True
+                         tile_5.update_possible()
+                         tile_5.run_tiler()
+                    elif self.possible_coord == (2, 2):
+                         tile_6.possible = True
+                         tile_6.update_possible()
+                         tile_6.run_tiler()
+                    elif self.possible_coord == (2, 3):
+                         tile_7.possible = True
+                         tile_7.update_possible()
+                         tile_7.run_tiler()
+                    elif self.possible_coord == (2, 4):
+                         tile_8.possible = True
+                         tile_8.update_possible()
+                         tile_8.run_tiler()
+                    elif self.possible_coord == (2, 5):
+                         tile_9.possible = True
+                         tile_9.update_possible()
+                         tile_9.run_tiler()
+                    elif self.possible_coord == (3, 1):
+                         tile_10.possible = True
+                         tile_10.update_possible()
+                         tile_10.run_tiler()
+                    elif self.possible_coord == (3, 2):
+                         tile_11.possible = True
+                         tile_11.update_possible()
+                         tile_11.run_tiler()
+                    elif self.possible_coord == (3, 3):
+                         tile_12.possible = True
+                         tile_12.update_possible()
+                         tile_12.run_tiler()
+                    elif self.possible_coord == (3, 4):
+                         tile_13.possible = True
+                         tile_13.update_possible()
+                         tile_13.run_tiler()
+                    elif self.possible_coord == (3, 5):
+                         tile_14.possible = True
+                         tile_14.update_possible()
+                         tile_14.run_tiler()
+                    elif self.possible_coord == (4, 1):
+                         tile_15.possible = True
+                         tile_15.update_possible()
+                         tile_15.run_tiler()
+                    elif self.possible_coord == (4, 2):
+                         tile_16.possible = True
+                         tile_16.update_possible()
+                         tile_16.run_tiler()
+                    elif self.possible_coord == (4, 3):
+                         tile_17.possible = True
+                         tile_17.update_possible()
+                         tile_17.run_tiler()
+                    elif self.possible_coord == (4, 4):
+                         tile_18.possible = True
+                         tile_18.update_possible()
+                         tile_18.run_tiler()
+                    elif self.possible_coord == (4, 5):
+                         tile_19.possible = True
+                         tile_19.update_possible()
+                         tile_19.run_tiler()
+                    elif self.possible_coord == (5, 1):
+                         tile_20.possible = True
+                         tile_20.update_possible()
+                         tile_20.run_tiler()
+                    elif self.possible_coord == (5, 2):
+                         tile_21.possible = True
+                         tile_21.update_possible()
+                         tile_21.run_tiler()
+                    elif self.possible_coord == (5, 3):
+                         tile_22.possible = True
+                         tile_22.update_possible()
+                         tile_22.run_tiler()
+                    elif self.possible_coord == (5, 4):
+                         tile_23.possible = True
+                         tile_23.update_possible()
+                         tile_23.run_tiler()
+                    elif self.possible_coord == (5, 5):
+                         tile_24.possible = True
+                         tile_24.update_possible()
+                         tile_24.run_tiler()
+    def unpossible_tiler(self):
+        if self.possible_coord == (1, 1):
+            tile_0.unpossible()
+            tile_0.run_tiler()
+        elif self.possible_coord == (1, 2):
+            tile_1.unpossible()
+            tile_1.run_tiler()
+        elif self.possible_coord == (1, 3):
+            tile_2.unpossible()
+            tile_2.run_tiler()
+        elif self.possible_coord == (1, 4):
+            tile_3.unpossible()
+            tile_3.run_tiler()
+        elif self.possible_coord == (1, 5):
+            tile_4.unpossible()
+            tile_4.run_tiler()
+        elif self.possible_coord == (2, 1):
+            tile_5.unpossible()
+            tile_5.run_tiler()
+        elif self.possible_coord == (2, 2):
+            tile_6.unpossible()
+            tile_6.run_tiler()
+        elif self.possible_coord == (2, 3):
+            tile_7.unpossible()
+            tile_7.run_tiler()
+        elif self.possible_coord == (2, 4):
+            tile_8.unpossible()
+            tile_8.run_tiler()
+        elif self.possible_coord == (2, 5):
+            tile_9.unpossible()
+            tile_9.run_tiler()
+        elif self.possible_coord == (3, 1):
+            tile_10.unpossible()
+            tile_10.run_tiler()
+        elif self.possible_coord == (3, 2):
+            tile_11.unpossible()
+            tile_11.run_tiler()
+        elif self.possible_coord == (3, 3):
+            tile_12.unpossible()
+            tile_12.run_tiler()
+        elif self.possible_coord == (3, 4):
+            tile_13.unpossible()
+            tile_13.run_tiler()
+        elif self.possible_coord == (3, 5):
+            tile_14.unpossible()
+            tile_14.run_tiler()
+        elif self.possible_coord == (4, 1):
+            tile_15.unpossible()
+            tile_15.run_tiler()
+        elif self.possible_coord == (4, 2):
+            tile_16.unpossible()
+            tile_16.run_tiler()
+        elif self.possible_coord == (4, 3):
+            tile_17.unpossible()
+            tile_17.run_tiler()
+        elif self.possible_coord == (4, 4):
+            tile_18.unpossible()
+            tile_18.run_tiler()
+        elif self.possible_coord == (4, 5):
+            tile_19.unpossible()
+            tile_19.run_tiler()
+        elif self.possible_coord == (5, 1):
+            tile_20.unpossible()
+            tile_20.run_tiler()
+        elif self.possible_coord == (5, 2):
+            tile_21.unpossible()
+            tile_21.run_tiler()
+        elif self.possible_coord == (5, 3):
+            tile_22.unpossible()
+            tile_22.run_tiler()
+        elif self.possible_coord == (5, 4):
+            tile_23.unpossible()
+            tile_23.run_tiler()
+        elif self.possible_coord == (5, 5):
+            tile_24.unpossible()
+            tile_24.run_tiler()
+    def move(self,movement):
+        if self.turn == 'red':
+            for piece in red_team:
+                if piece.coord == self.selected_tile_coord:
+                    piece.move(selected_cards_list[self.selected_card_var-1],movement)
     def update_game(self):
         # this is the encompassing method for the game instance to update the changing parameters
         self.update_screen()  #screen updates
@@ -448,6 +642,7 @@ tile_21 = Board_tile(game, 21)
 tile_22 = Board_tile(game, 22, False, True)
 tile_23 = Board_tile(game, 23)
 tile_24 = Board_tile(game, 24)
+
 #red piece instances
 r1 = Red_pieces(1,5,'alive',game)
 r2 = Red_pieces(2,5,'alive',game)

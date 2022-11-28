@@ -8,9 +8,10 @@ class Pieces:
         """initailize the starting location in x and y, along with the status as alive"""
         self.x = x_location
         self.y = y_location
-        self.coord = (self.x , self.y )
+        self.coord = (self.y , self.x )
         self.status = status
         self.game = game
+
 
     def positionX(self):
         return self.x
@@ -46,23 +47,28 @@ class Red_pieces(Pieces):
     def check_legal_move(self, card, movement_letter):
         move_x = card.return_movment_X(movement_letter)
         move_y = card.return_movment_Y(movement_letter)
-        validity = True
+        self.validity = True
         if move_x + self.x < 1 or move_x + self.x > 5:
-            validity = False
+            self.validity = False
         if move_y + self.y < 1 or move_y + self.y > 5:
-            validity = False
+            self.validity = False
         for team_member in self.team_piece_list:
             if move_x + self.x == team_member.positionX() and move_y + self.y == team_member.positionY():
-                validity = False
-        return validity
+                self.validity = False
+
 
     def move(self, card, movement_letter):
-        move_x = card.return_movment_X(movement_letter)
-        self.x += move_x
-        print(self.x)
-        move_y = card.return_movment_Y(movement_letter)
-        self.y += move_y
-        self.check_killed_opponents()
+        self.check_legal_move(card,movement_letter)
+        if self.validity == True:
+            move_x = card.return_movment_X(movement_letter)
+            self.x += move_x
+            print(self.x)
+            move_y = card.return_movment_Y(movement_letter)
+            self.y += move_y
+            self.check_killed_opponents()
+            self.coord = (self.y, self.x)
+            print(self)
+            print(self.coord)
 
     def draw(self):
         coordinate = (self.x,self.y)
@@ -128,22 +134,25 @@ class Blue_pieces(Pieces):
     def check_legal_move(self, card, movement_letter):
         move_x = card.return_movment_X(movement_letter)
         move_y = card.return_movment_Y(movement_letter)
-        validity = True
+        self.validity = True
         if move_x - self.x < 1 or move_x - self.x > 5:
-            validity = False
+            self.validity = False
         if move_y - self.y < 1 or move_y - self.y > 5:
-            validity = False
+            self.validity = False
         for team_member in self.team_piece_list:
             if move_x + self.x == team_member.positionX() and move_y - self.y == team_member.positionY():
-                validity = False
-        return validity
+                self.validity = False
+
     def move(self, card, movement_letter):
-        move_x = card.return_movment_X(movement_letter)
-        self.x -= move_x
-        print(self.x)
-        move_y = card.return_movment_Y(movement_letter)
-        self.y -= move_y
-        self.check_killed_opponents()
+        self.check_legal_move(card, movement_letter)
+        if self.validity == True:
+            move_x = card.return_movment_X(movement_letter)
+            self.x -= move_x
+            print(self.x)
+            move_y = card.return_movment_Y(movement_letter)
+            self.y -= move_y
+            self.coord = (self.y, self.x)
+            self.check_killed_opponents()
 
     def draw(self):
         coordinate = (self.x,self.y)
