@@ -1,5 +1,13 @@
-import pygame
-#test document
-blue_u = pygame.image.load(f'images/TigerBS.png')
-blue_u_rect = blue_u.get_rect()
-print(blue_u_rect)
+
+
+
+def swapPositions(list, pos1, pos2):
+    list[pos1], list[pos2] = list[pos2], list[pos1]
+
+
+
+
+List = [23, 65, 19, 90]
+pos1, pos2 = 1, 3
+swapPositions(List, pos1-1, pos2-1)
+print(List)

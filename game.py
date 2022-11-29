@@ -565,6 +565,15 @@ class Game:
             for piece in red_team:
                 if piece.coord == self.selected_tile_coord:
                     piece.move(selected_cards_list[self.selected_card_var-1],movement)
+                    selected_cards_list[self.selected_card_var-1], selected_cards_list[2] = selected_cards_list[2], selected_cards_list[self.selected_card_var-1]
+                    self.draw_cards()
+
+
+    def turn_changer(self):
+        if self.turn == 'red':
+            self.turn = 'blue'
+        elif self.turn == 'blue':
+            self.turn == 'red'
     def update_game(self):
         # this is the encompassing method for the game instance to update the changing parameters
         self.update_screen()  #screen updates
@@ -613,6 +622,7 @@ class Game:
         self.screen.fill(self.settings.bg_color)
         #screen fill with background color
 
+#<= >= != == <== ==> ligatures
 
 
 game = Game()

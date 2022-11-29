@@ -2,6 +2,9 @@ The things I need to do:
     4. add turn switching
     5. add win conditions
     6. card rotation
+        a. fix the lack of redrawing
+    2. add possible moves
+        a. fix bug of move 3
 The things I have done since last git:
     1. fix card selection bug
         a. double highlighting
@@ -10,5 +13,3 @@ The things I have done since last git:
         a. movement selection
         b. piece selection
         c. event check
-    2. add possible moves
-        a. fix bug
