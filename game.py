@@ -145,30 +145,30 @@ class Game:  # NOQA E302
     def selected_card_mover(self,direction): # NOQA E301
         if self.turn == 'red':
            if self.selected_card_var + direction <= 3: # NOQA
-               print(self.selected_card_var) # NOQA
-               print('false')# NOQA
+               #print(self.selected_card_var) # NOQA
+                print('false')# NOQA
            elif self.selected_card_var + direction >= 6:
-              print(self.selected_card_var)
-              print('false')
+              #print(self.selected_card_var)
+                print('false')
            else:
                num = self.selected_card_var -1
                self.selected_card_var += direction
                selected_cards_list[num].selected = False
-               print(self.selected_card_var)
+               #print(self.selected_card_var)
                self.update_card_image()
         if self.turn == 'blue':
            if self.selected_card_var + direction <= 0:
               print('false')
-              print(self.selected_card_var)
+              #print(self.selected_card_var)
            elif self.selected_card_var + direction >= 3:
               print('false')
-              print(self.selected_card_var)
+              #print(self.selected_card_var)
            else:
                num = self.selected_card_var - 1
                self.selected_card_var += direction
                selected_cards_list[num].selected = False
                # print(f'{selected_cards_list[num]} turned {selected_cards_list[num].selected}')
-               print(self.selected_card_var)
+               #print(self.selected_card_var)
                self.update_card_image()
     def selected_tile_mover(self,direction_X,direction_Y):
         # This method is the movement for the tile selector it takes inputs from the event checker to get the x and y direction of movement
@@ -299,9 +299,9 @@ class Game:  # NOQA E302
                # print(piece.coord)
                 if self.selected_tile_coord == piece.coord:
                     possible_coord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_y
-                    print(possible_coord_x,selected_cards_list[num].return_movment_X(movement))
+                    #print(possible_coord_x,selected_cards_list[num].return_movment_X(movement))
                     possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_x
-                    print(possible_coord_y,selected_cards_list[num].return_movment_Y(movement))
+                    #print(possible_coord_y,selected_cards_list[num].return_movment_Y(movement))
                     self.possible_coord = (possible_coord_y, possible_coord_x)
                     #print(self.possible_coord)
                     if self.possible_coord == (1, 1):
@@ -407,10 +407,10 @@ class Game:  # NOQA E302
         if self.turn == 'blue':
             for piece in blue_team:
                 if self.selected_tile_coord == piece.coord:
-                    possible_coord_x = selected_cards_list[num].return_movment_X(movement) - self.selected_tile_coord_y
-                    print(possible_coord_x, selected_cards_list[num].return_movment_X(movement))
-                    possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_x
-                    print(possible_coord_y, selected_cards_list[num].return_movment_Y(movement))
+                    possible_coord_x = -selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_y
+                    #print(possible_coord_x, selected_cards_list[num].return_movment_X(movement))
+                    possible_coord_y = -selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_x
+                    #print(possible_coord_y, selected_cards_list[num].return_movment_Y(movement))
                     self.possible_coord = (possible_coord_y, possible_coord_x)
                     self.possible_coord = (possible_coord_y, possible_coord_x)
                     if self.possible_coord == (1, 1):
@@ -589,11 +589,12 @@ class Game:  # NOQA E302
         elif self.possible_coord == (5, 5):
             tile_24.unpossible()
             tile_24.run_tiler()
+
     def move(self, movement):
         if self.turn == 'red':
             for piece in red_team:
                 if piece.coord == self.selected_tile_coord:
-                    piece.move(selected_cards_list[self.selected_card_var-1], movement)
+                    piece.move_r(selected_cards_list[self.selected_card_var-1], movement)
                     selected_cards_list[self.selected_card_var-1], selected_cards_list[2] =\
                         selected_cards_list[2], selected_cards_list[self.selected_card_var-1]
                     selected_cards_pos_init()
@@ -602,14 +603,15 @@ class Game:  # NOQA E302
         elif self.turn == 'blue':
             for piece in blue_team:
                 if piece.coord == self.selected_tile_coord:
-                    piece.move(selected_cards_list[self.selected_card_var-1], movement)
+                    #print(movement)
+                    piece.move_b(selected_cards_list[self.selected_card_var-1], movement)
+
+                    
                     selected_cards_list[self.selected_card_var-1], selected_cards_list[2] =\
                         selected_cards_list[2], selected_cards_list[self.selected_card_var-1]
                     selected_cards_pos_init()
                     self.turn_changer()
                     self.update_game()
-
-
 
     def turn_changer(self):
         if self.turn == 'red':

@@ -57,7 +57,7 @@ class Red_pieces(Pieces):
                 self.validity = False
 
 
-    def move(self, card, movement_letter):
+    def move_r(self, card, movement_letter):
         self.check_legal_move(card,movement_letter)
         if self.validity == True:
             move_x = card.return_movment_X(movement_letter)
@@ -137,20 +137,25 @@ class Blue_pieces(Pieces):
         self.validity = True
         if move_x - self.x < 1 or move_x - self.x > 5:
             self.validity = False
-        if move_y - self.y < 1 or move_y - self.y > 5:
+        if move_y + self.y < 1 or move_y + self.y > 5:
             self.validity = False
         for team_member in self.team_piece_list:
-            if move_x + self.x == team_member.positionX() and move_y - self.y == team_member.positionY():
+            if move_x - self.x == team_member.positionX() and move_y - self.y == team_member.positionY():
                 self.validity = False
 
-    def move(self, card, movement_letter):
+    def move_b(self, card, movement_letter):
         self.check_legal_move(card, movement_letter)
         if self.validity == True:
             move_x = card.return_movment_X(movement_letter)
+            print(move_x)
+            print(self.x)
             self.x -= move_x
             print(self.x)
             move_y = card.return_movment_Y(movement_letter)
+            print(move_y)
+            print(self.y)
             self.y -= move_y
+            print(self.y)
             self.coord = (self.y, self.x)
             self.check_killed_opponents()
 

@@ -44,13 +44,13 @@ class Card:
         if movement_letter == 'B' :
             return self.movement_B[1]
         if movement_letter == 'C':
-            return self.movement_C[0]
+            return self.movement_C[1]
         if movement_letter == 'D':
-            return self.movement_D[0]
+            return self.movement_D[1]
 
 # This is the 16 card instances
 tiger = Card('TigerRU.png','TigerRS.png','TigerBU.png','TigerBS.png', (0, -2), (0, 1),(0,0),(0,0))
-dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1), (1, 1), (1, 1))
+dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1), (-1, 1), (1, 1))
 frog = Card('FrogRU.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0), (1, 1),(0,0))
 rabbit = Card('RabbitRU.png','RabbitRS.png','RabbitBU.png','RabbitBS.png', (1, -1), (2, 0), (-1, 1),(0,0))
 crab = Card('CrabRU.png','CrabRS.png','CrabBU.png','CrabBS.png', (0, -1), (-2, 0), (2, 0),(0,0))
