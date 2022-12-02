@@ -4,7 +4,7 @@ from random import randint
 class Card:
     """This is the class for the cards and their stored movements"""
 
-    def __init__(self,red_u, red_s,blue_u,blue_s, movement_A , movement_B,movement_C = (0,0),movement_D =(0,0),card_stack_pos = 0 ):
+    def __init__(self,red_u, red_s,blue_u,blue_s, movement_A , movement_B,movement_C,movement_D,card_stack_pos = 0 ):
         #the card class contains the following information:
         #   the image files for red and blue, selected and unselcted
         #   the selected value which is an indicator for weather a card is selcted or not
@@ -49,22 +49,22 @@ class Card:
             return self.movement_D[0]
 
 # This is the 16 card instances
-tiger = Card('TigerRU.png','TigerRS.png','TigerBU.png','TigerBS.png', (0, -2), (0, 1))
-dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1), (-1, 1), (1, 1))
-frog = Card('FrogRU.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0), (1, 1))
-rabbit = Card('RabbitRU.png','RabbitRS.png','RabbitBU.png','RabbitBS.png', (1, -1), (2, 0), (-1, 1))
-crab = Card('CrabRU.png','CrabRS.png','CrabBU.png','CrabBS.png', (0, -1), (-2, 0), (2, 0))
+tiger = Card('TigerRU.png','TigerRS.png','TigerBU.png','TigerBS.png', (0, -2), (0, 1),(0,0),(0,0))
+dragon = Card('DragonRU.png','DragonRS.png','DragonBU.png','DragonBS.png', (-2, -1), (2, -1), (1, 1), (1, 1))
+frog = Card('FrogRU.png','FrogRS.png','FrogBU.png','FrogBS.png', (-1, -1), (-2, 0), (1, 1),(0,0))
+rabbit = Card('RabbitRU.png','RabbitRS.png','RabbitBU.png','RabbitBS.png', (1, -1), (2, 0), (-1, 1),(0,0))
+crab = Card('CrabRU.png','CrabRS.png','CrabBU.png','CrabBS.png', (0, -1), (-2, 0), (2, 0),(0,0))
 elephant = Card('ElephantRU.png','ElephantRS.png','ElephantBU.png','ElephantBS.png', (-1, -1), (1, -1), (-1, 0), (1, 0))
-goose = Card('GooseRU.png','GooseRS.png','GooseBU.png','GooseBS.png', (-1, -1), (-1, 0), (1, 0), (1, 1))
+goose = Card('GooseRU.png','GooseRS.png','GooseBU.png','GooseBS.png', (-1, -1), (-1, 0), (1, 0), (1, 1),(0,0))
 rooster = Card('RoosterRU.png','RoosterRS.png','RoosterBU.png','RoosterBS.png', (1, -1), (-1, 0), (1, 0), (-1, 1))
 monkey = Card('MonkeyRU.png','MonkeyRS.png','MonkeyBU.png','MonkeyBS.png', (-1, -1), (1, -1), (1, 1), (-1, 1))
-mantis = Card('MantisRU.png','MantisRS.png','MantisBU.png','MantisBS.png', (-1, -1), (1, -1), (0, 1))
-horse = Card('HorseRU.png','HorseRS.png','HorseBU.png','HorseBS.png', (0, -1), (-1, 0), (0, 1))
-ox = Card('OxRU.png','OxRS.png','OxBU.png','OxBS.png', (0, -1), (1, 0), (0, 1))
-crane = Card('CraneRU.png','CraneRS.png','CraneBU.png','CraneBS.png', (0, -1), (-1, 1), (1, 1))
-boar = Card('BoarRU.png','BoarRS.png','BoarBU.png','BoarBS.png', (0, 1), (-1, 0), (1, 0))
-eel = Card('EelRU.png','EelRS.png','EelBU.png','EelBS.png', (-1, -1), (1, 0), (-1, 1))
-cobra = Card('CobraRU.png','CobraRS.png','CobraBU.png','CobraBS.png', (1, -1), (-1, 0), (1, 1))
+mantis = Card('MantisRU.png','MantisRS.png','MantisBU.png','MantisBS.png', (-1, -1), (1, -1), (0, 1),(0,0))
+horse = Card('HorseRU.png','HorseRS.png','HorseBU.png','HorseBS.png', (0, -1), (-1, 0), (0, 1),(0,0))
+ox = Card('OxRU.png','OxRS.png','OxBU.png','OxBS.png', (0, -1), (1, 0), (0, 1),(0,0))
+crane = Card('CraneRU.png','CraneRS.png','CraneBU.png','CraneBS.png', (0, -1), (-1, 1), (1, 1),(0,0))
+boar = Card('BoarRU.png','BoarRS.png','BoarBU.png','BoarBS.png', (0, 1), (-1, 0), (1, 0),(0,0))
+eel = Card('EelRU.png','EelRS.png','EelBU.png','EelBS.png', (-1, -1), (1, 0), (-1, 1),(0,0))
+cobra = Card('CobraRU.png','CobraRS.png','CobraBU.png','CobraBS.png', (1, -1), (-1, 0), (1, 1),(0,0))
 
 #list of the cards in the 16 cards to choose from
 card_name_list = [tiger, dragon, frog, rabbit, crab, elephant, goose,
@@ -90,5 +90,6 @@ def selected_cards_pos_init():
         card.update_position(i)
         print('Position Update')
         i += 1
+
 selected_cards_pos_init() #calling the function
 

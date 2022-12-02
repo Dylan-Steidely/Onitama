@@ -7,45 +7,50 @@ from pawns import Red_pieces
 from pawns import Red_King
 from pawns import Blue_King
 from cards import selected_cards_list
+from cards import selected_cards_pos_init
 pygame.init()
-class Game:
+class Game:  # NOQA E302
     def __init__(self):
-        #general game set up
+        # General game set up
         pygame.init()
-        self.settings = Settings() #pulls game settings from the settings.py file (screen height and width)
-        self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height)) #creates the surface with specified dimensions
-        self.settings.screen_width = self.screen.get_rect().width #screen rect probably not needed so will be removed soon
-        self.settings.screen_height = self.screen.get_rect().height #screen rect probably not needed so will be removed soon
-        pygame.display.set_caption("Onitama") #name of the game and window
+        self.settings = Settings()  # pulls game settings from the settings.py file (screen height and width)
+        # creates the surface with specified dimensions
+        self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
+        # screen rect probably not needed so will be removed soon
+        self.settings.screen_width = self.screen.get_rect().width
+        # screen rect probably not needed so will be removed soon
+        self.settings.screen_height = self.screen.get_rect().height
+        pygame.display.set_caption("Onitama")  # name of the game and window
 
         # the following are starting parameters when the game boots initially
 
-        #this first pair does the s and y coordinate for the selecter along with the corresponding touple
+        # this first pair does the s and y coordinate for the selector along with the corresponding tuple
         self.selected_tile_coord_x = 3
         self.selected_tile_coord_y = 3
-        self.selected_tile_coord = (self.selected_tile_coord_x,self.selected_tile_coord_y)
+        self.selected_tile_coord = (self.selected_tile_coord_x, self.selected_tile_coord_y)
 
-        self.possible_coord = (0,0)
+        self.possible_coord = (0, 0)
 
         self.movement = ''
 
-        #this is the initial card selector variable deterimines where the card selector will start from
+        # this is the initial card selector variable deterimines where the card selector will start from
         self.selected_card_var = 4
 
-        #trun order can either be 'blue' or 'red' if not than this is going to break
-        self.turn= 'red'
-    def event_checker(self):
-        #event checker duh
-        #sorry that was rude. i just feel like this one is kinda obvious
+        # turn order can either be 'blue' or 'red' if not than this is going to break
+        self.turn = 'red'
+    def event_checker(self):  # NOQA E301
+
+        # event checker duh
+        # sorry that was rude. I just feel like this one is kinda obvious
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
-                sys.exit() #i like to exit the game so that my teachers don't realize i am not taking notes ;)
+                sys.exit()  # I like to exit the game so that my teachers don't realize I am not taking notes ;)
             elif event.type == pygame.KEYDOWN:
-                #I only put key down events cause it was the only one i needed
+                # I only put key down events cause it was the only one I needed
                 self.key_down(event)
-    def key_down(self, event):
-        #if the key down events are triggered they will be funneled into here
-        #WASD is for the tile selector
+    def key_down(self, event): # NOQA E301
+        # If the key down events are triggered they will be funneled into here
+        # WASD is for the tile selector
         if event.key == pygame.K_d:
             self.selected_tile_mover(0, 1)
         elif event.key == pygame.K_s:
@@ -54,7 +59,7 @@ class Game:
             self.selected_tile_mover(-1, 0)
         elif event.key == pygame.K_a:
             self.selected_tile_mover(0, -1)
-        #UP and Down is for the card selector
+        # UP and Down is for the card selector
         elif event.key == pygame.K_UP:
             self.selected_card_mover(-1)
         elif event.key == pygame.K_DOWN:
@@ -77,51 +82,71 @@ class Game:
             self.possible_tiler(self.movement)
         elif event.key == pygame.K_SPACE:
             self.move(self.movement)
+            for cards in selected_cards_list:
+                # List of selected_cards for the game is in the selected cards list and this cycles through and checks their
+                # position and see where they belong
+                if cards.pos == 1:  # top card
+                    cards.image = cards.blue_u
+                    self.screen.blit(cards.image, (620, 0))
+                elif cards.pos == 2:  # 2nd top card
+                    cards.image = cards.blue_u
+                    self.screen.blit(cards.image, (620, 55))
+                elif cards.pos == 3 and self.turn == 'red':  # middle card for red
+                    self.screen.blit(cards.red_u, (620, 300))  # NOQA E231
+                elif cards.pos == 3 and self.turn == 'blue':  # middle card for blue
+                    self.screen.blit(cards.blue_u, (620, 300))  # NOQA E231
+                elif cards.pos == 4:  # 2nd to bottom
+                    cards.image = cards.red_u
+                    self.screen.blit(cards.image, (620, 545))
+                elif cards.pos == 5:  # bottom card
+                    cards.image = cards.red_u
+                    self.screen.blit(cards.image, (620, 600))
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
-    def draw_cards(self):
-        #methid drawing cards
+    def draw_cards(self):  # NOQA E301
+        # method drawing cards
         for cards in selected_cards_list:
-            #list of selected_cards for the game is in the selected cards list and this cycles through and checks their position and see where they belong
-            if cards.pos == 1: # top card
-                if cards.selected == True:
+            # List of selected_cards for the game is in the selected cards list and this cycles through and checks their
+            # position and see where they belong
+            if cards.pos == 1:  # top card
+                if cards.selected:
                     cards.image = cards.blue_s
                 else:
                     cards.image = cards.blue_u
-                self.screen.blit(cards.image, (620,0))
-            elif cards.pos == 2: # 2nd top card
-                if cards.selected == True:
+                self.screen.blit(cards.image, (620, 0))
+            elif cards.pos == 2:  # 2nd top card
+                if cards.selected:
                     cards.image = cards.blue_s
                 else:
                     cards.image = cards.blue_u
-                self.screen.blit(cards.image, (620,55))
-            elif cards.pos == 3 and self.turn == 'red': #middle card for red
-                self.screen.blit(cards.red_u, (620,300))
-            elif cards.pos == 3 and self.turn == 'blue': #middle card for blue
-                self.screen.blit(cards.blue_u, (620,300))
-            elif cards.pos == 4: #2nd to bottom
-                if cards.selected == True:
+                self.screen.blit(cards.image, (620, 55))
+            elif cards.pos == 3 and self.turn == 'red':  # middle card for red
+                self.screen.blit(cards.red_u, (620,300)) # NOQA E231
+            elif cards.pos == 3 and self.turn == 'blue':  # middle card for blue
+                self.screen.blit(cards.blue_u, (620,300))  # NOQA E231
+            elif cards.pos == 4:  # 2nd to bottom
+                if cards.selected:
                     cards.image = cards.red_s
                 else:
                     cards.image = cards.red_u
-                self.screen.blit(cards.image, (620,545))
-            elif cards.pos == 5: #bottom card
-                if cards.selected == True:
+                self.screen.blit(cards.image, (620, 545))
+            elif cards.pos == 5:  # bottom card
+                if cards.selected:
                     cards.image = cards.red_s
                 else:
                     cards.image = cards.red_u
-                self.screen.blit(cards.image, (620,600))
-    def update_card_image(self):
+                self.screen.blit(cards.image, (620, 600))
+    def update_card_image(self):  # NOQA E301
         # this makes the 
         num = self.selected_card_var - 1
         selected_cards_list[num].selected = True
-        #print(f'{selected_cards_list[num]} turned {selected_cards_list[num].selected}')
+        # print(f'{selected_cards_list[num]} turned {selected_cards_list[num].selected}')
         self.draw_cards()
-    def selected_card_mover(self,direction):
+    def selected_card_mover(self,direction): # NOQA E301
         if self.turn == 'red':
-           if self.selected_card_var + direction <= 3:
-               print(self.selected_card_var)
-               print('false')
+           if self.selected_card_var + direction <= 3: # NOQA
+               print(self.selected_card_var) # NOQA
+               print('false')# NOQA
            elif self.selected_card_var + direction >= 6:
               print(self.selected_card_var)
               print('false')
@@ -129,7 +154,6 @@ class Game:
                num = self.selected_card_var -1
                self.selected_card_var += direction
                selected_cards_list[num].selected = False
-               #print(f'{selected_cards_list[num]} turned {selected_cards_list[num].selected}')
                print(self.selected_card_var)
                self.update_card_image()
         if self.turn == 'blue':
@@ -270,14 +294,16 @@ class Game:
         num = self.selected_card_var - 1
         if self.turn == 'red':
             for piece in red_team:
-                print(piece)
-                print(self.selected_tile_coord)
-                print(piece.coord)
+                #print(piece)
+                #print(self.selected_tile_coord)
+               # print(piece.coord)
                 if self.selected_tile_coord == piece.coord:
                     possible_coord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_y
+                    print(possible_coord_x,selected_cards_list[num].return_movment_X(movement))
                     possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_x
-                    self.possible_coord = (possible_coord_y,possible_coord_x)
-                    print(self.possible_coord)
+                    print(possible_coord_y,selected_cards_list[num].return_movment_Y(movement))
+                    self.possible_coord = (possible_coord_y, possible_coord_x)
+                    #print(self.possible_coord)
                     if self.possible_coord == (1, 1):
                          tile_0.possible = True
                          tile_0.update_possible()
@@ -381,8 +407,11 @@ class Game:
         if self.turn == 'blue':
             for piece in blue_team:
                 if self.selected_tile_coord == piece.coord:
-                    possible_cord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_x
-                    possible_cord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_y
+                    possible_coord_x = selected_cards_list[num].return_movment_X(movement) - self.selected_tile_coord_y
+                    print(possible_coord_x, selected_cards_list[num].return_movment_X(movement))
+                    possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_x
+                    print(possible_coord_y, selected_cards_list[num].return_movment_Y(movement))
+                    self.possible_coord = (possible_coord_y, possible_coord_x)
                     self.possible_coord = (possible_coord_y, possible_coord_x)
                     if self.possible_coord == (1, 1):
                          tile_0.possible = True
@@ -560,20 +589,35 @@ class Game:
         elif self.possible_coord == (5, 5):
             tile_24.unpossible()
             tile_24.run_tiler()
-    def move(self,movement):
+    def move(self, movement):
         if self.turn == 'red':
             for piece in red_team:
                 if piece.coord == self.selected_tile_coord:
-                    piece.move(selected_cards_list[self.selected_card_var-1],movement)
-                    selected_cards_list[self.selected_card_var-1], selected_cards_list[2] = selected_cards_list[2], selected_cards_list[self.selected_card_var-1]
-                    self.draw_cards()
+                    piece.move(selected_cards_list[self.selected_card_var-1], movement)
+                    selected_cards_list[self.selected_card_var-1], selected_cards_list[2] =\
+                        selected_cards_list[2], selected_cards_list[self.selected_card_var-1]
+                    selected_cards_pos_init()
+                    self.turn_changer()
+                    self.update_game()
+        elif self.turn == 'blue':
+            for piece in blue_team:
+                if piece.coord == self.selected_tile_coord:
+                    piece.move(selected_cards_list[self.selected_card_var-1], movement)
+                    selected_cards_list[self.selected_card_var-1], selected_cards_list[2] =\
+                        selected_cards_list[2], selected_cards_list[self.selected_card_var-1]
+                    selected_cards_pos_init()
+                    self.turn_changer()
+                    self.update_game()
+
 
 
     def turn_changer(self):
         if self.turn == 'red':
             self.turn = 'blue'
+            self.selected_card_var = 1
         elif self.turn == 'blue':
-            self.turn == 'red'
+            self.turn = 'red'
+            self.selected_card_var = 4
     def update_game(self):
         # this is the encompassing method for the game instance to update the changing parameters
         self.update_screen()  #screen updates
@@ -622,7 +666,7 @@ class Game:
         self.screen.fill(self.settings.bg_color)
         #screen fill with background color
 
-#<= >= != == <== ==> ligatures
+#<= >= != == <== ==> ligatures >= <= == !=
 
 
 game = Game()
