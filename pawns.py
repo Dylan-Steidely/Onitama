@@ -22,6 +22,7 @@ class Pieces:
         self.status = 'dead'
         self.x = 0
         self.y = 0
+        self.coord = (0,0)
     def create_team(self, t1, t2, t3, t4):
         self.team_piece_list = [t1, t2, t3, t4]
         # allows piece to recognize other team_members
@@ -62,13 +63,10 @@ class Red_pieces(Pieces):
         if self.validity == True:
             move_x = card.return_movment_X(movement_letter)
             self.x += move_x
-            print(self.x)
             move_y = card.return_movment_Y(movement_letter)
             self.y += move_y
             self.check_killed_opponents()
             self.coord = (self.y, self.x)
-            print(self)
-            print(self.coord)
 
     def draw(self):
         coordinate = (self.x,self.y)
@@ -135,27 +133,21 @@ class Blue_pieces(Pieces):
         move_x = card.return_movment_X(movement_letter)
         move_y = card.return_movment_Y(movement_letter)
         self.validity = True
-        if move_x - self.x < 1 or move_x - self.x > 5:
+        if -move_x + self.x < 1 or -move_x + self.x > 5:
             self.validity = False
-        if move_y + self.y < 1 or move_y + self.y > 5:
+        if -move_y + self.y < 1 or -move_y + self.y > 5:
             self.validity = False
         for team_member in self.team_piece_list:
-            if move_x - self.x == team_member.positionX() and move_y - self.y == team_member.positionY():
+            if -move_x + self.x == team_member.positionX() and -move_y + self.y == team_member.positionY():
                 self.validity = False
 
     def move_b(self, card, movement_letter):
         self.check_legal_move(card, movement_letter)
         if self.validity == True:
             move_x = card.return_movment_X(movement_letter)
-            print(move_x)
-            print(self.x)
             self.x -= move_x
-            print(self.x)
             move_y = card.return_movment_Y(movement_letter)
-            print(move_y)
-            print(self.y)
             self.y -= move_y
-            print(self.y)
             self.coord = (self.y, self.x)
             self.check_killed_opponents()
 

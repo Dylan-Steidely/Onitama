@@ -62,7 +62,7 @@ mantis = Card('MantisRU.png','MantisRS.png','MantisBU.png','MantisBS.png', (-1, 
 horse = Card('HorseRU.png','HorseRS.png','HorseBU.png','HorseBS.png', (0, -1), (-1, 0), (0, 1),(0,0))
 ox = Card('OxRU.png','OxRS.png','OxBU.png','OxBS.png', (0, -1), (1, 0), (0, 1),(0,0))
 crane = Card('CraneRU.png','CraneRS.png','CraneBU.png','CraneBS.png', (0, -1), (-1, 1), (1, 1),(0,0))
-boar = Card('BoarRU.png','BoarRS.png','BoarBU.png','BoarBS.png', (0, 1), (-1, 0), (1, 0),(0,0))
+boar = Card('BoarRU.png','BoarRS.png','BoarBU.png','BoarBS.png', (0, -1), (-1, 0), (1, 0),(0,0))
 eel = Card('EelRU.png','EelRS.png','EelBU.png','EelBS.png', (-1, -1), (1, 0), (-1, 1),(0,0))
 cobra = Card('CobraRU.png','CobraRS.png','CobraBU.png','CobraBS.png', (1, -1), (-1, 0), (1, 1),(0,0))
 
@@ -88,7 +88,6 @@ def selected_cards_pos_init():
     i = 1
     for card in selected_cards_list:
         card.update_position(i)
-        print('Position Update')
         i += 1
 
 selected_cards_pos_init() #calling the function

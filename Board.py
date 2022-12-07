@@ -1,7 +1,8 @@
 import pygame
-import time
 pygame.init()
-class Board_tile:
+
+
+class Board_tile(): # NOQA
     """
     0  1  2  3  4
     5  6  7  8  9
@@ -11,58 +12,61 @@ class Board_tile:
     this is an arrangement of how the tiles will look like.
     each tile is given a tile_number which references its position so that it can be referenced
     additionally there are 4 states a tile can be:
-    unseleceted which is the default for a tile
+    unselected which is the default for a tile
     selected which is used for selecting a tile and also lets the user know where the 'cursor' is
-    possible unselcted tile is used to show a tile is an avilable move for the selected card
-    possible selected is a selceted tile that is a possible move
+    possible unselected tile is used to show a tile is an available move for the selected card
+    possible selected is a selected tile that is a possible move
     """
 
-    def __init__(self, game, tile_number,selected = False,temple = False):
-        self.game = game #the name of the instance of the game class is inputted here
-        self.tile = tile_number #tile reference number
-        self.selected = selected #to know if tile is selected or not
-        self.possible = False #if tile is possible move
-        self.temple = temple #if tile is a temple tile
-        if self.temple == True: #check the temple tile and updates the images
+    def __init__(self, game, tile_number, selected=False, temple=False):
+        self.game = game  # the name of the instance of the game class is inputted here
+        self.tile = tile_number  # tile reference number
+        self.selected = selected  # to know if tile is selected or not
+        self.possible = False  # if tile is possible move
+        self.temple = temple  # if tile is a temple tile
+        if self.temple:  # check the temple tile and updates the images
             self.tile_image = pygame.image.load('images/templetile.png')
         else:
             self.tile_image = pygame.image.load('images/unselectedtile.png')  # unselected default image
-        self.tile_image_rect = self.tile_image.get_rect() #image rect
+        self.tile_image_rect = self.tile_image.get_rect()  # image rect
 
     def remove_selection(self):
-        # remove the selection boulion to False
+        # remove the selection bullion to False
         self.selected = False
-        if self.temple == True:
+        if self.temple:
             self.tile_image = pygame.image.load('images/templetile.png')
         else:
             self.tile_image = pygame.image.load('images/unselectedtile.png')
+
     def add_selection(self):
-        # add the selection boulion to True
+        # add the selection bullion to True
         self.selected = True
+
     def _update_select(self):
         # This method checks if tile is selceted and updates the image
-        if self.selected == True:
+        if self.selected:
             self.tile_image = pygame.image.load('images/selectedtile.png')
-            if self.temple == True:
+            if self.temple:
                 self.tile_image = pygame.image.load('images/selectedtempletile.png')
 
     def update_possible(self):
-        print('possible')
-        if self.possible == True:
+        if self.possible:
             self.tile_image = pygame.image.load('images/possibletile.png')
-            if  self.temple == True:
+            if self.temple:
                 self.tile_image = pygame.image.load('images/possibletempletile.png')
+
     def unpossible(self):
-        if self.possible == True:
+        if self.possible:
             self.possible = False
             self.tile_image = pygame.image.load('images/unselectedtile.png')
-            if self.temple == True:
+            if self.temple:
                 self.tile_image = pygame.image.load('images/templetile.png')
+
     def arrange_tile(self):
-        #this method places tiles in their respective positions
-        #similar to the game.py code this is actually disgusting but i just don't think about it too much
+        # This method places tiles in their respective positions
+        # Similar to the game.py code this is actually disgusting, but I just don't think about it too much
         if self.tile == 0:
-            self.game.screen.blit(self.tile_image,(0,0))
+            self.game.screen.blit(self.tile_image, (0, 0))
         elif self.tile == 1:
             self.game.screen.blit(self.tile_image, (130, 0))
         elif self.tile == 2:
@@ -72,7 +76,7 @@ class Board_tile:
         elif self.tile == 4:
             self.game.screen.blit(self.tile_image, (520, 0))
         elif self.tile == 5:
-            self.game.screen.blit(self.tile_image,(0,130))
+            self.game.screen.blit(self.tile_image, (0, 130))
         elif self.tile == 6:
             self.game.screen.blit(self.tile_image, (130, 130))
         elif self.tile == 7:
@@ -112,11 +116,7 @@ class Board_tile:
         elif self.tile == 24:
             self.game.screen.blit(self.tile_image, (520, 520))
 
-
     def run_tiler(self):
-        #method combines the check and the arrnagement methods to make a tiler that when looped will tile the board
+        # Method combines the check and the arrangement methods to make a tiler that when looped will tile the board
         self._update_select()
         self.arrange_tile()
-
-
-
