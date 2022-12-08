@@ -8,9 +8,11 @@ from pawns import Red_King
 from pawns import Blue_King
 from cards import selected_cards_list
 from cards import selected_cards_pos_init
+from settings import Strong_hit
+from random import randint
+from settings import song_list
 
 pygame.init()
-
 
 class Game:  # NOQA E302
     def __init__(self):
@@ -46,6 +48,11 @@ class Game:  # NOQA E302
         self.blue_win = False
         self.win = ''
         self.i = 0
+        #song number picker
+        self.song_num = randint(0,2)
+        pygame.mixer.music.load(song_list[self.song_num])
+        pygame.mixer.music.play()
+
 
     def event_checker(self):  # NOQA E301
 
@@ -57,6 +64,13 @@ class Game:  # NOQA E302
             elif event.type == pygame.KEYDOWN:
                 # I only put key down events because it was the only one I needed
                 self.key_down(event)
+            elif event.type == pygame.MOUSEBUTTONDOWN:
+                # cycles through the tunes to keep you jammin'
+                self.song_num += 1
+                if self.song_num == 3:
+                    self.song_num = 0
+                pygame.mixer.music.load(song_list[self.song_num])
+                pygame.mixer.music.play()
 
     def key_down(self, event):  # NOQA E301
         # If the key down events are triggered they will be funneled into here
@@ -113,6 +127,8 @@ class Game:  # NOQA E302
                     self.screen.blit(cards.image, (620, 600))
         elif event.key == pygame.K_ESCAPE:
             sys.exit()
+
+
 
     def draw_cards(self):  # NOQA E301
         # method drawing cards
@@ -304,13 +320,16 @@ class Game:  # NOQA E302
             # this is the dumbest thing that works ever
 
     def possible_tiler(self, movement):
-        num = self.selected_card_var - 1
-        if self.turn == 'red':
-            for piece in red_team:
+        # this method tiles the possible moves it requires an input of the movement the user is trying to use
+        num = self.selected_card_var - 1 # this accounts for the list starting with 0 not 1
+        if self.turn == 'red': # red turn duh
+            for piece in red_team: # runs through list of the red pieces to see which ones matched the selected
+                # tile coordinates
                 if self.selected_tile_coord == piece.coord:
                     possible_coord_x = selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_y
                     possible_coord_y = selected_cards_list[num].return_movment_Y(movement) + self.selected_tile_coord_x
                     self.possible_coord = (possible_coord_y, possible_coord_x)
+                    # the next group of code loops through to properly tile the matching tiles
                     if self.possible_coord == (1, 1):
                         tile_0.possible = True
                         tile_0.update_possible()
@@ -411,7 +430,7 @@ class Game:  # NOQA E302
                         tile_24.possible = True
                         tile_24.update_possible()
                         tile_24.run_tiler()
-        if self.turn == 'blue':
+        if self.turn == 'blue': # blue turn refer to above as reference
             for piece in blue_team:
                 if self.selected_tile_coord == piece.coord:
                     possible_coord_x = -selected_cards_list[num].return_movment_X(movement) + self.selected_tile_coord_y
@@ -520,6 +539,7 @@ class Game:  # NOQA E302
                         tile_24.run_tiler()
 
     def unpossible_tiler(self):
+        # this method de tiles all the possible tiles into their appropriate tile.
         if self.possible_coord == (1, 1):
             tile_0.unpossible()
             tile_0.run_tiler()
@@ -597,16 +617,24 @@ class Game:  # NOQA E302
             tile_24.run_tiler()
 
     def move(self, movement):
+        # movement method that combines the pawn movement with the overall game processes that are required for ending
+        # a turn
         if self.turn == 'red':
             for piece in red_team:
                 if piece.coord == self.selected_tile_coord:
-                    piece.move_r(selected_cards_list[self.selected_card_var - 1], movement)
+                    # similar as before this above selects the selected piece
+                    piece.move_r(selected_cards_list[self.selected_card_var - 1], movement)  # method from pawns.py
                     selected_cards_list[self.selected_card_var - 1], selected_cards_list[2] = \
                         selected_cards_list[2], selected_cards_list[self.selected_card_var - 1]
+                    # ^ reorganizing the list to account for the changed card
                     selected_cards_pos_init()
+                    # ^ re appropriate the card numbers
                     self.turn_changer()
+                    # ^ change turns
                     self.update_game()
+                    # ^ redraw and update game
         elif self.turn == 'blue':
+            # same but for blue team
             for piece in blue_team:
                 if piece.coord == self.selected_tile_coord:
                     piece.move_b(selected_cards_list[self.selected_card_var - 1], movement)
@@ -617,6 +645,7 @@ class Game:  # NOQA E302
                     self.update_game()
 
     def turn_changer(self):
+        # this is a method to change the turns
         if self.turn == 'red':
             self.turn = 'blue'
             self.selected_card_var = 1
@@ -625,18 +654,31 @@ class Game:  # NOQA E302
             self.selected_card_var = 4
 
     def check_win(self):
+        # method goes through the 4 win scenarios to check if they come true
         if R.coord == (1, 3):
             self.red_win = True
             self.win = 'river'
+            if self.i == 0:
+                pygame.mixer.Sound.play(Strong_hit)
+                self.i += 1  # iterating variable to ensure only played once
         elif B.coord == (5, 3):
             self.blue_win = True
             self.win = 'river'
+            if self.i == 0:
+                pygame.mixer.Sound.play(Strong_hit)
+                self.i += 1  # iterating variable to ensure only played once
         elif R.status == 'dead':
             self.blue_win = True
             self.win = 'rock'
+            if self.i == 0:
+                pygame.mixer.Sound.play(Strong_hit)
+                self.i += 1  # iterating variable to ensure only played once
         elif B.status == 'dead':
             self.red_win = True
             self.win = 'rock'
+            if self.i == 0:
+                pygame.mixer.Sound.play(Strong_hit)
+                self.i += 1  # iterating variable to ensure only played once
 
     def update_game(self):
         # this is the encompassing method for the game instance to update the changing parameters
@@ -685,30 +727,35 @@ class Game:  # NOQA E302
         B.draw()
         self.check_win()
         if self.red_win:
+            # if the win conditions are met these loops add the text onto the screen and do a cool color change thing
             if self.win == 'river':
+                self.screen.fill(self.settings.bg_color)
                 font = pygame.font.Font('freesansbold.ttf', 32)
-                text = font.render('RED wins by River', True, (100 + self.i, 0, 0))
+                text = font.render('RED wins by River', True, (0 + self.i, 0, 0))
                 self.screen.blit(text, (257, 308))
-                if 100 + self.i < 250:
+                if 0 + self.i < 250:
                     self.i += 5
             elif self.win == 'rock':
+                self.screen.fill(self.settings.bg_color)
                 font = pygame.font.Font('freesansbold.ttf', 32)
-                text = font.render('RED wins by Rock', True, (100 + self.i, 0, 0))
+                text = font.render('RED wins by Rock', True, (0 + self.i, 0, 0))
                 self.screen.blit(text, (257, 308))
-                if 100 + self.i < 250:
+                if 0 + self.i < 250:
                     self.i += 5
         elif self.blue_win:
             if self.win == 'river':
+                self.screen.fill(self.settings.bg_color)
                 font = pygame.font.Font('freesansbold.ttf', 32)
-                text = font.render('BLUE wins by River', True, (0, 0, 100 + self.i))
+                text = font.render('BLUE wins by River', True, (0, 0,0 + self.i))
                 self.screen.blit(text, (246, 308))
-                if 100 + self.i < 250:
+                if 0 + self.i < 250:
                     self.i += 5
             elif self.win == 'rock':
+                self.screen.fill(self.settings.bg_color)
                 font = pygame.font.Font('freesansbold.ttf', 32)
-                text = font.render('BLUE wins by Rock', True, (0, 0, 100 + self.i))
+                text = font.render('BLUE wins by Rock', True, (0, 0,0 + self.i))
                 self.screen.blit(text, (246, 308))
-                if 100 + self.i < 250:
+                if 0 + self.i < 250:
                     self.i += 5
 
     def update_screen(self):

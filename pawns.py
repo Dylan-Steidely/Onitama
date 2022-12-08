@@ -1,6 +1,8 @@
 #from cards import Card
 #from cards import selected_cards_list
+from settings import sounds
 import pygame
+import random
 class Pieces:
     """ This class is for the 4 red and blue pawns and 1 red and blue king and will contain the following information: board location and status (alive vs. dead). """
 
@@ -35,6 +37,13 @@ class Pieces:
         for enemy in self.enemy_piece_list:
             if self.x == enemy.positionX() and + self.y == enemy.positionY():
                 enemy.kill()
+                num = random.randint(0,1)
+                sound = sounds[num]
+                pygame.mixer.music.pause()
+                pygame.mixer.Sound.play(sound)
+                pygame.mixer.music.unpause()
+
+
 
 
 
